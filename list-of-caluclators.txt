@@ -1,0 +1,7 @@
+Pre boil to post boil calculator (additional parameter for expected OG tells you how much DME to add, or how much to dilute)
+Decoction calculator (tells amounts and outputs a graph)
+IBU estimator
+Pitch rate calculator
+ABV calculator
+Refractometer calculator
+Infusion calculator
