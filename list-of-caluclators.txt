@@ -5,3 +5,4 @@ Pitch rate calculator
 ABV calculator
 Refractometer calculator
 Infusion calculator
+Acid calculator (probably pretty tricky as we'd to know residual alkalinity, etc.)
