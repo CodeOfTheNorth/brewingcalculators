@@ -1,0 +1,29 @@
+<md-toolbar>
+  <h3>Beer Vizier <small>brewing helper app</small></h3>
+  <span class="spacer"></span>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_vert</md-icon>
+  </button>
+  <md-menu #menu="mdMenu">
+    <button md-menu-item>
+      <md-icon>fingerprint</md-icon>
+      <span>Login</span>
+    </button>
+    <button md-menu-item disabled>
+      <md-icon>announcement</md-icon>
+      <span>Issues</span>
+    </button>
+    <button md-menu-item>
+      <md-icon>notifications_off</md-icon>
+      <span>Disable alerts</span>
+    </button>
+  </md-menu>
+</md-toolbar>
+<md-tab-group color="primary">
+  <md-tab label="Calculator">
+    <h1>Here be Calculators</h1>
+  </md-tab>
+  <md-tab label="Help">
+    <h1>If you needed help, you'd be in trouble.</h1>
+  </md-tab>
+</md-tab-group>
