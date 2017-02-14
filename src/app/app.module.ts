@@ -6,12 +6,13 @@ import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
 
-import { AppComponent } from './app.component';
+import { AppComponent, WelcomeDialog } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    WelcomeDialog,
     NavbarComponent
   ],
   imports: [
@@ -21,6 +22,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MaterialModule.forRoot()
   ],
   providers: [],
+  entryComponents: [WelcomeDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
