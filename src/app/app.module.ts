@@ -6,8 +6,9 @@ import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
 
-import { AppComponent, WelcomeDialog } from './app.component';
+import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { WelcomeDialog } from './dialogs/welcome-dialog.component';
 
 @NgModule({
   declarations: [

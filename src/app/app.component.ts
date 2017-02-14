@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { WelcomeDialog } from './dialogs/welcome-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -24,10 +25,3 @@ export class AppComponent implements OnInit {
     this.openDialog();
   }
 }
-
-@Component({
-  selector: 'welcome-dialog',
-  template: '<md-dialog-content color="primary"><h1>Hi!</h1></md-dialog-content>'
-  // templateUrl: './welcome-dialog.component.html'
-})
-export class WelcomeDialog{}
