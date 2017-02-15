@@ -9,12 +9,18 @@ import 'hammerjs';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { WelcomeDialog } from './dialogs/welcome-dialog.component';
+import { CalculatorComponent } from './calculator/calculator.component';
+import { PostMissingComponent } from './post-missing/post-missing.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeDialog,
-    NavbarComponent
+    NavbarComponent,
+    CalculatorComponent,
+    PostMissingComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
