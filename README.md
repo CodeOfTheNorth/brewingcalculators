@@ -2,6 +2,28 @@
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.30.
 
+## Database structure
+
+`calcs`:
+```
+{
+  "calc_id": serial key,
+  "name": text,
+  "keywords":
+    [text],
+  "description": text
+}
+```
+`suggested_keywords`:
+```
+{
+  "keyword_id": serial key,
+  "keyword": text,
+  "description": text,
+  "user_info": text
+}
+```
+
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
