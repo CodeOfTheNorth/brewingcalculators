@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalcsService } from '../calcs.service';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _calcsService: CalcsService) { }
 
   ngOnInit() {
   }

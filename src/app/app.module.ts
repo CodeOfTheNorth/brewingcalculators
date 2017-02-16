@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
-
+import { CalcsService } from './calcs.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -28,7 +28,7 @@ import { HelpComponent } from './help/help.component';
     HttpModule,
     MaterialModule.forRoot()
   ],
-  providers: [],
+  providers: [CalcsService],
   entryComponents: [WelcomeDialog],
   bootstrap: [AppComponent]
 })
