@@ -11,17 +11,14 @@ export class AppComponent implements OnInit {
   selectedOption: string;
   openDialog() {
     setTimeout(() => {
+      localStorage['newUser'] = 'hi friend!';
       this.dialog.open(WelcomeDialog);
     }, 2000);
-    // let dialogRef = this.dialog.open(WelcomeDialog);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.selectedOption = result;
-    // });
   }
   constructor(public dialog: MdDialog){
 
   }
   ngOnInit() {
-    this.openDialog();
+    if(localStorage['newUser']!='hi friend!'){this.openDialog();}
   }
 }
