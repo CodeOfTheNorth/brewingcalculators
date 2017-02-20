@@ -14,6 +14,7 @@ export class CalculatorComponent implements OnInit {
   displayCalcs(){
     this._calcsService.getCalcs().subscribe(calcs => {
       this.calcs = calcs;
+      console.log(calcs);
     },
     error => console.log(error));
   }

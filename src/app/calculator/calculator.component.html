@@ -1,4 +1,3 @@
-<p>
-  calculator works!
-</p>
-<span *ngIf="calcs">{{calcs}}</span>
+<md-chip-list *ngIf="calcs">
+  <md-chip *ngFor="let calc of calcs">{{calc.name}}</md-chip>
+</md-chip-list>
