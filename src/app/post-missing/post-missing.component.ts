@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CalcsService } from '../calcs.service';
 
 @Component({
   selector: 'app-post-missing',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostMissingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _calcsService: CalcsService) { }
 
   ngOnInit() {
   }
