@@ -9,8 +9,8 @@ body {
 }
 @import '~@angular/material/core/theming/all-theme';
 @include mat-core();
-$beer-vizier-primary: mat-palette($mat-yellow, 800, A700, 900);
-$beer-vizier-accent: mat-palette($mat-brown, 900);
-$beer-vizier-warn: mat-palette($mat-red, A400);
+$beer-vizier-primary: mat-palette($mat-amber);
+$beer-vizier-accent: mat-palette($mat-brown, 300);
+$beer-vizier-warn: mat-palette($mat-pink);
 $beer-vizier-theme: mat-dark-theme($beer-vizier-primary, $beer-vizier-accent, $beer-vizier-warn);
 @include angular-material-theme($beer-vizier-theme);
