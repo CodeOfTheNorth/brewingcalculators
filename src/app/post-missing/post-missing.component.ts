@@ -7,18 +7,18 @@ import { CalcsService } from '../calcs.service';
   styleUrls: ['./post-missing.component.css']
 })
 export class PostMissingComponent implements OnInit {
-  body:any[];
+  body:any;
   keyword:string;
   name:string;
   description:string;
   constructor(private _calcsService: CalcsService) { }
   sendKeyword(){
     console.log(this.keyword);
-    this.body = [];
+    this.body = {};
     this.body["keyword"] = this.keyword;
     this.body["user_info"] = this.name;
     this.body["description"] = this.description;
-    console.log(this.body);
+    //console.log(this.body);
     this._calcsService.postMissing(this.body)
       .subscribe(res => {
 
