@@ -9,7 +9,6 @@ import { CalcsService } from '../calcs.service';
 export class CalculatorComponent {
   calcs:any[];
   search:string;
-  searchStr:string;
   constructor(private _calcsService: CalcsService) {
     this.displayCalcs();
   }

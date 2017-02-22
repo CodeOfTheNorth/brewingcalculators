@@ -19,7 +19,7 @@ export class CalcsService {
   postMissing(body:any) : Observable<any[]>{
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this._http.post(this.api, body, options)
+    return this._http.post(this.api + 'suggested_keywords', body, options)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));
   }
