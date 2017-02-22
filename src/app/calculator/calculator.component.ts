@@ -8,8 +8,16 @@ import { CalcsService } from '../calcs.service';
 })
 export class CalculatorComponent {
   calcs:any[];
+  search:string;
+  searchStr:string;
   constructor(private _calcsService: CalcsService) {
     this.displayCalcs();
+  }
+  searchCalcs(){
+    this._calcsService.searchCalcs(this.search).subscribe(calcs => {
+      this.calcs = calcs;
+    },
+    error => console.log(error));
   }
   displayCalcs(){
     this._calcsService.getCalcs().subscribe(calcs => {
