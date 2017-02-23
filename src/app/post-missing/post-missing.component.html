@@ -1,6 +1,18 @@
-
 <form>
-  <md-input-container dividerColor="accent">
-    <input type="text" mdInput placeholder="Keyword">
-  </md-input-container>
+  <md-list>
+    <md-list-item>
+      <md-input-container mdTooltip="Write a function name!">
+        <input type="text" mdInput placeholder="Suggested Keyword" [(ngModel)]="keyword" name="keyword">
+      </md-input-container>
+      <md-input-container mdTooltip="Write your name!">
+        <input type="text" mdInput placeholder="Name" [(ngModel)]="name" name="name">
+      </md-input-container>
+    </md-list-item>
+    <md-list-item>
+      <md-input-container class="double" mdTooltip="Write a brief description of the calculator you'd love to see!">
+        <input type="text" mdInput placeholder="Description" [(ngModel)]="description" name="description">
+      </md-input-container>
+      <button md-fab (click)="sendKeyword()"><md-icon>add</md-icon></button>
+    </md-list-item>
+  </md-list>
 </form>

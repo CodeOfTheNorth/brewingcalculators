@@ -1,4 +1,7 @@
 <div class="bz-div">
+  <md-input-container>
+    <input type="text" mdInput placeholder="What are you up to..." [(ngModel)]="search" name="search" (keyup)="searchCalcs()">
+  </md-input-container>
   <md-chip-list *ngIf="calcs">
     <md-chip *ngFor="let calc of calcs">{{calc.name}}</md-chip>
   </md-chip-list>

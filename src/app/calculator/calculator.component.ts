@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CalcsService } from '../calcs.service';
 
 @Component({
@@ -6,18 +6,24 @@ import { CalcsService } from '../calcs.service';
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css']
 })
-export class CalculatorComponent implements OnInit {
+export class CalculatorComponent {
   calcs:any[];
+  search:string;
   constructor(private _calcsService: CalcsService) {
     this.displayCalcs();
   }
-  displayCalcs(){
-    this._calcsService.getCalcs().subscribe(calcs => {
+  searchCalcs(){
+    this._calcsService.searchCalcs(this.search).subscribe(calcs => {
       this.calcs = calcs;
     },
     error => console.log(error));
   }
-  ngOnInit() {
+  displayCalcs(){
+    this._calcsService.getCalcs().subscribe(calcs => {
+      this.calcs = calcs;
+      console.log(calcs);
+    },
+    error => console.log(error));
   }
 
 }
