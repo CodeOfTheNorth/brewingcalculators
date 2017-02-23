@@ -20,7 +20,6 @@ export class CalcsService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let preparedBody = body;
-    //console.log(this.api + 'suggested_keywords', preparedBody, options);
     return this._http.post(this.api + 'suggested_keywords', preparedBody, options)
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));
