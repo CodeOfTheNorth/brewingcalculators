@@ -33,3 +33,13 @@ md-input-container {
 md-input-container.double {
   width: 460px;
 }
+md-icon {
+  max-height: 1em;
+  position: relative;
+}
+
+svg {
+  position: absolute;
+  fill: white;
+  height: 1.5em;
+}

@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdIconRegistry } from '@angular/material';
 import 'hammerjs';
 import { CalcsService } from './calcs.service';
 
@@ -38,4 +38,10 @@ import { routes } from './app.routes';
   entryComponents: [WelcomeDialog],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+        'keyboard-arrow-left',
+        sanitizer.bypassSecurityTrustResourceUrl('../assets/img/svg/ic_keyboard_arrow_left_black_24px.svg'));
+  }
+}

@@ -7,11 +7,15 @@ import { CalcsService } from '../calcs.service';
   styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent {
+  hideSearch:boolean;
   calcs:any[];
   search:string;
   constructor(private _calcsService: CalcsService) {
+    this.hideSearch = false;
     this.displayCalcs();
   }
+  toggleSearch(){ this.hideSearch = !this.hideSearch;
+  console.log(this.hideSearch) }
   searchCalcs(){
     this._calcsService.searchCalcs(this.search).subscribe(calcs => {
       this.calcs = calcs;

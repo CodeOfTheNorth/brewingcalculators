@@ -1,9 +1,10 @@
 <div class="bz-div">
-  <md-input-container>
+  <md-input-container *ngIf="!hideSearch">
     <input type="text" mdInput placeholder="What are you up to..." [(ngModel)]="search" name="search" (keyup)="searchCalcs()">
   </md-input-container>
   <md-chip-list *ngIf="calcs">
-    <md-chip *ngFor="let calc of calcs" routerLink="{{calc.calc_id}}" style="cursor:pointer;">{{calc.name}}</md-chip>
+    <div *ngIf="!hideSearch"><md-chip *ngFor="let calc of calcs" routerLink="{{calc.calc_id}}" style="cursor:pointer;" (click)="toggleSearch()">{{calc.name}}</md-chip></div>
+    <md-chip *ngIf="hideSearch" style="cursor:pointer;" (click)="toggleSearch()"><md-icon svgIcon="keyboard-arrow-left"></md-icon>Back to Search</md-chip>
   </md-chip-list>
   <router-outlet></router-outlet>
 </div>
