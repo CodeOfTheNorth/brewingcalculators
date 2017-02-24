@@ -7,7 +7,7 @@ $beer-vizier-theme: mat-dark-theme($beer-vizier-primary, $beer-vizier-accent, $b
 @include angular-material-theme($beer-vizier-theme);
 
 $bz-primary: #ffc107;
-$bz-accent: #a1887f;
+$bz-accent: #795548;
 
 body {
   margin: 0;
