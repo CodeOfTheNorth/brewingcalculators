@@ -11,7 +11,8 @@ export class TimerComponent implements OnInit {
   constructor() { }
 
   validateTimerInput(){
-    if (this.timerInput.length >= 5 && !this.timerInput.match('^\d{2}:\d{2}$')){
+    //if (this.timerInput.length >= 5 && !this.timerInput.match('^\\d{2}:\\d{2}$')){
+    if (this.timerInput.length >= 5 && !this.timerInput.match(/\d{2}:\d{2}$/)){
       // erase button smashing results
       this.timerInput = '';
       return;
