@@ -8,18 +8,28 @@ import { Component, OnInit } from '@angular/core';
 export class TimerComponent implements OnInit {
   timerInput:string;
   brewtimer:any;
-  _regex:any;
+  _regex:RegExp;
+  first:RegExp;
+  second:RegExp;
+  third:RegExp;
+  fourth:RegExp;
+  fifth:RegExp;
   constructor() {
     //One Character
-    //var first = /^\d$/;
+    this.first = /^\d$/;
+    //this.first = /(?:^\d$)/;
     //Two Characters
-    //var second = /^\d{2}$/;
+    this.second = /^\d{2}$/;
+    //this.second = /(?:^\d{2}$)/;
     //Three Characters
-    //var third = /^\d{2}:$/;
+    this.third = /^\d{2}:$/;
+    //this.third = /(?:^\d{2}:$)/;
     //Four Characters
-    //var fourth = /^\d{2}:\d$/;
+    this.fourth = /^\d{2}:\d$/;
+    //this.fourth = /(?:^\d{2}:\d$)/;
     //Five Characters
-    //var fifth = /^\d{2}:\d{2}$/;
+    this.fifth = /^\d{2}:\d{2}$/;
+    //this.fifth = /(?:^\d{2}:\d{2}$)/;
     //Combined!!!
     this._regex = /(?:^\d$)|(?:^\d{2}$)|(?:^\d{2}:$)|(?:^\d{2}:\d$)|(?:^\d{2}:\d{2}$)/;
   }
@@ -38,6 +48,8 @@ export class TimerComponent implements OnInit {
 
   }
   validateTimerInput(){
+    //if(!this.timerInput.match(this._regex)){
+    //console.log('default time validation response: ', this.timerInput.valid)
     if(!this.timerInput.match(this._regex)){
       // erase button-smashing results
       this.timerInput = '';

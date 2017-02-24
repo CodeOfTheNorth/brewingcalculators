@@ -1,6 +1,28 @@
-<md-card>
-  <md-input-container mdTooltip="Enter a duration in hours and minutes">
-    <input type="text" mdInput placeholder="HH:MM" [(ngModel)]="timerInput" (keyup)="validateTimerInput()">
-  </md-input-container>
-  <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
-</md-card>
+  <md-card>
+    <md-input-container mdTooltip="Enter a duration in hours and minutes">
+      <form name="timerForm" ng_controller="DateController as dateCtrl">
+      <input type="time" 
+             name="myTimeInput"
+             min="00:00:00"
+             max="99:99:99"
+             mdInput 
+             placeholder="HH:MM:ss" 
+             [(ngModel)]="timerInput" 
+             (keyup)="validateTimerInput()"
+             required >
+      <div role="alert">
+          <span class="error" ng-show="timerForm.myTimeInput.$error.required">
+              Required!
+          </span>
+          <span class="error" ng-show="timerForm.myTimeInput.$error.time">
+              Not a valid time
+          </span>
+          <span class="error" ng-show="timerForm.myTimeInput.$valid">
+              isValid: {{timerForm.myTimeInput.$valid}}
+          </span>
+      </div>
+      </form>
+      <!-- <input type="text" mdInput placeholder="HH:MM" [(ngModel)]="timerInput" (keyup)="validateTimerInput()"> -->
+    </md-input-container>
+    <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
+  </md-card>
