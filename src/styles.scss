@@ -37,9 +37,11 @@ md-icon {
   max-height: 1em;
   position: relative;
 }
-
 svg {
   position: absolute;
   fill: white;
   height: 1.5em;
+}
+md-card {
+  margin: 30px 0;
 }
