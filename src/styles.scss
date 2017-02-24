@@ -1,7 +1,7 @@
 @import '~@angular/material/core/theming/all-theme';
 @include mat-core();
 $beer-vizier-primary: mat-palette($mat-amber);
-$beer-vizier-accent: mat-palette($mat-brown, 300);
+$beer-vizier-accent: mat-palette($mat-brown);
 $beer-vizier-warn: mat-palette($mat-pink);
 $beer-vizier-theme: mat-dark-theme($beer-vizier-primary, $beer-vizier-accent, $beer-vizier-warn);
 @include angular-material-theme($beer-vizier-theme);
