@@ -12,6 +12,10 @@ import { WelcomeDialog } from './dialogs/welcome-dialog.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { PostMissingComponent } from './post-missing/post-missing.component';
 import { HelpComponent } from './help/help.component';
+import { TimerComponent } from './timer/timer.component';
+
+
+import { routes } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -20,13 +24,15 @@ import { HelpComponent } from './help/help.component';
     NavbarComponent,
     CalculatorComponent,
     PostMissingComponent,
-    HelpComponent
+    HelpComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
+    routes
   ],
   providers: [CalcsService],
   entryComponents: [WelcomeDialog],
