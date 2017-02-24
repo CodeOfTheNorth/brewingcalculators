@@ -2,4 +2,5 @@
   <md-input-container mdTooltip="Enter a duration in hours and minutes">
     <input type="text" mdInput placeholder="HH:MM" [(ngModel)]="timerInput" (keyup)="validateTimerInput()">
   </md-input-container>
+  <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
 </md-card>

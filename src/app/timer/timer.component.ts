@@ -10,10 +10,21 @@ export class TimerComponent implements OnInit {
   brewtimer:any;
   constructor() { }
 
+  setTimer(){
+    if (this.timerInput){
+      if(this.timerInput.match(/\d{2}:\d{2}$/)){
+        var hours = parseInt(this.timerInput.substring(0,2));
+        var minutes = parseInt(this.timerInput.substring(3,5));
+        var milliseconds = (hours * 60 + minutes) * 60000;
+        console.log(new Date(milliseconds).toTimeString());
+        console.log(new Date(milliseconds + Date.now()).toLocaleTimeString());
+      }
+    }
+
+  }
   validateTimerInput(){
-    //if (this.timerInput.length >= 5 && !this.timerInput.match('^\\d{2}:\\d{2}$')){
     if (this.timerInput.length >= 5 && !this.timerInput.match(/\d{2}:\d{2}$/)){
-      // erase button smashing results
+      // erase button-smashing results
       this.timerInput = '';
       return;
     } else if (this.timerInput.length == 0)
