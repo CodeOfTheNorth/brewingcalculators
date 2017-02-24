@@ -11,8 +11,13 @@ export class TimerComponent implements OnInit {
   constructor() { }
 
   validateTimerInput(){
+    if (this.timerInput.length >= 5 && !this.timerInput.match('^\d{2}:\d{2}$')){
+      // erase button smashing results
+      this.timerInput = '';
+      return;
+    } else if (this.timerInput.length == 0)
     // keyup event could be a backspace leaving us with an empty string.
-    if (this.timerInput.length == 0){
+    {
       return;
     } else if (this.timerInput.substring(this.timerInput.length - 1) == ':')
     // if a colon is the last character entered
@@ -59,6 +64,7 @@ export class TimerComponent implements OnInit {
         return;
       }
     }
+
   }
 
   ngOnInit() {
