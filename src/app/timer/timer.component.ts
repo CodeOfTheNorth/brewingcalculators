@@ -7,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimerComponent implements OnInit {
   timerInput:string;
-  brewtimer:any;
   timeRemaining:string;
   alarmTime:string;
-  // timeLocaleEnd:string;
   timeEnd: number;
   timerInstance: any;
   constructor() { }
