@@ -12,6 +12,7 @@ export class TimerComponent implements OnInit {
   alarmTime:string;
   // timeLocaleEnd:string;
   timeEnd: number;
+  timerInstance: any;
   constructor() { }
 
   setTimer(){
@@ -19,6 +20,7 @@ export class TimerComponent implements OnInit {
       if(this.timerInput.match(/\d{2}:\d{2}$/))
       // make sure the timer input matches our validation
       {
+        clearInterval(this.timerInstance);
         this.timeRemaining = this.timerInput;
         // bind it to the display
         var hours = parseInt(this.timerInput.substring(0,2));
@@ -53,7 +55,7 @@ export class TimerComponent implements OnInit {
         // console.log(this.timeEnd);
         // unfinished stuff
         // console.log(Date.parse(this.timeLocaleEnd));
-        setInterval(() =>{this.runTimer()},1000);
+        this.timerInstance = setInterval(() =>{this.runTimer()},1000);
         // do the thing
       }
     }
@@ -69,9 +71,15 @@ export class TimerComponent implements OnInit {
         this.timeRemaining = hours + ':';
       }
       var minutes = Math.floor(remaining / 60000);
+      if (minutes.toString().length == 1){
+        this.timeRemaining += '0';
+      }
       this.timeRemaining += minutes + ':';
       var remaining = remaining % 60000;
       var seconds = Math.floor(remaining / 1000);
+      if (seconds.toString().length == 1){
+        this.timeRemaining += '0';
+      }
       this.timeRemaining += seconds;
     }
   }
