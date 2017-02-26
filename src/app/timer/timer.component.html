@@ -1,4 +1,6 @@
 <md-card>
+  <h1 *ngIf="timeRemaining">{{timeRemaining}}</h1>
+  <h2 *ngIf="alarmTime">Timer will go off at {{alarmTime}}</h2>
   <md-input-container mdTooltip="Enter a duration in hours and minutes">
     <input type="text" mdInput placeholder="HH:MM" [(ngModel)]="timerInput" (keyup)="validateTimerInput()">
   </md-input-container>
