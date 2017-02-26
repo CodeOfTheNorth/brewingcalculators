@@ -28,33 +28,11 @@ export class TimerComponent implements OnInit {
         // pull the hours and minutes from the plain text string
         var milliseconds = (hours * 60 + minutes) * 60000;
         // convert the total amount into milliseconds
-
-        console.log(Date.now());
-        // now in milliseconds
-        console.log(Date.now() + milliseconds);
-        // timer end time in milliseconds
-
         this.timeEnd = milliseconds + Date.now();
         localStorage['brewtimer'] = this.timeEnd.toString();
+        // set the end time as a variable and store in the database.
         this.alarmTime = new Date(this.timeEnd).toTimeString();
-
-        // this.timeEnd = new Date(milliseconds + Date.now());
-        // bind timeEnd to the date object of the ending time
-
-        // this.timeLocaleEnd = new Date(milliseconds + Date.now()).toLocaleTimeString();
-        // bind timeLocaleEnd to a string of the local time when the calculator ends
-
-        // Date.UTC(year, month, day, hours, minutes, seconds, millisec)
-        // console.log(new Date(Date.UTC(0,0,0,hours,minutes)));
-        // console.log(new Date(milliseconds));
-
-        // console.log(new Date(milliseconds).toTimeString());
-        // console.log(typeof new Date(milliseconds).toTimeString());
-        // console.log(this.timeLocaleEnd);
-        // console.log(this.timeLocaleEnd);
-        // console.log(this.timeEnd);
-        // unfinished stuff
-        // console.log(Date.parse(this.timeLocaleEnd));
+        // display the time the alarm will go off.
         this.timerInstance = setInterval(() =>{this.runTimer()},1000);
         // do the thing
       }
@@ -64,10 +42,12 @@ export class TimerComponent implements OnInit {
     if (this.timeEnd){
       this.timeRemaining = '';
       var remaining = this.timeEnd - Date.now();
-      if (remaining <=0){clearInterval};
+      // remaining time is equal to the end time minus the current time
+      if (remaining <=0){clearInterval(this.timerInstance)};
+      // stop if we're done.
       if (remaining >= 3600000){
         var hours = Math.floor(remaining / 3600000);
-        var remaining = remaining % 3600000;
+        remaining = remaining % 3600000;
         this.timeRemaining = hours + ':';
       }
       var minutes = Math.floor(remaining / 60000);
@@ -75,7 +55,7 @@ export class TimerComponent implements OnInit {
         this.timeRemaining += '0';
       }
       this.timeRemaining += minutes + ':';
-      var remaining = remaining % 60000;
+      remaining = remaining % 60000;
       var seconds = Math.floor(remaining / 1000);
       if (seconds.toString().length == 1){
         this.timeRemaining += '0';
@@ -142,7 +122,12 @@ export class TimerComponent implements OnInit {
 
   ngOnInit() {
     if(localStorage['brewtimer']){
-      this.brewtimer = JSON.stringify(localStorage['brewtimer']);
+      this.timeEnd = Number(localStorage['brewtimer']);
+      // retrieve timer info from storage.
+      this.alarmTime = new Date(this.timeEnd).toTimeString();
+      // display the time the alarm will go off.
+      this.timerInstance = setInterval(() =>{this.runTimer()},1000);
+      // do the thing
     } else {
       localStorage['brewtimer'] = '';
     }
