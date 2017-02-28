@@ -13,7 +13,7 @@ export class TimerComponent implements OnInit {
   timerInstance: any;
   inputHours: string;
   inputMinutes: string;
-  re = /[0-9]/;
+  re = /[0-9.]/;
   constructor() { }
 
   setTimer(){
@@ -21,8 +21,10 @@ export class TimerComponent implements OnInit {
       return;
     }
     clearInterval(this.timerInstance);
-    var hours = parseInt(this.inputHours);
-    var minutes = parseInt(this.inputMinutes);
+    var hours = 0
+    if(this.inputHours){hours = parseInt(this.inputHours);}
+    var minutes = 0
+    if(this.inputMinutes){minutes = parseInt(this.inputMinutes);}
     var milliseconds = (hours * 60 + minutes) * 60000;
     // convert the total amount into milliseconds
     this.timeEnd = milliseconds + Date.now();
