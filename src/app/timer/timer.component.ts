@@ -13,30 +13,25 @@ export class TimerComponent implements OnInit {
   timerInstance: any;
   inputHours: string;
   inputMinutes: string;
+  re = /[0-9]/;
   constructor() { }
 
   setTimer(){
-    if (this.timerInput){
-      if(this.timerInput.match(/\d{2}:\d{2}$/))
-      // make sure the timer input matches our validation
-      {
-        clearInterval(this.timerInstance);
-        this.timeRemaining = this.timerInput;
-        // bind it to the display
-        var hours = parseInt(this.timerInput.substring(0,2));
-        var minutes = parseInt(this.timerInput.substring(3,5));
-        // pull the hours and minutes from the plain text string
-        var milliseconds = (hours * 60 + minutes) * 60000;
-        // convert the total amount into milliseconds
-        this.timeEnd = milliseconds + Date.now();
-        localStorage['brewtimer'] = this.timeEnd.toString();
-        // set the end time as a variable and store in the database.
-        this.alarmTime = new Date(this.timeEnd).toTimeString();
-        // display the time the alarm will go off.
-        this.timerInstance = setInterval(() =>{this.runTimer()},1000);
-        // do the thing
-      }
+    if (!this.inputHours && !this.inputMinutes) {// handles null input
+      return;
     }
+    clearInterval(this.timerInstance);
+    var hours = parseInt(this.inputHours);
+    var minutes = parseInt(this.inputMinutes);
+    var milliseconds = (hours * 60 + minutes) * 60000;
+    // convert the total amount into milliseconds
+    this.timeEnd = milliseconds + Date.now();
+    localStorage['brewtimer'] = this.timeEnd.toString();
+    // set the end time as a variable and store in the database.
+    this.alarmTime = new Date(this.timeEnd).toTimeString();
+    // display the time the alarm will go off.
+    this.timerInstance = setInterval(() =>{this.runTimer()},1000);
+    // do the thing
   }
   runTimer(){
     if (this.timeEnd){
@@ -63,71 +58,25 @@ export class TimerComponent implements OnInit {
       this.timeRemaining += seconds;
     }
   }
-  validateTimerInput2(){
-    var re = /[0-9]/;
+  validateHoursInput(){
+    if (!this.inputHours){return}
     var newHours:string = '';
     for (var i = 0, len = this.inputHours.length; i < len; i++){
-      if (this.inputHours[i].match(re)){
+      if (this.inputHours[i].match(this.re)){
         newHours += this.inputHours[i];
       }
     }
     this.inputHours = newHours;
   }
-  validateTimerInput(){
-    if (this.timerInput.length >= 5 && !this.timerInput.match(/\d{2}:\d{2}$/)){
-      // erase button-smashing results
-      this.timerInput = '';
-      return;
-    } else if (this.timerInput.length == 0)
-    // keyup event could be a backspace leaving us with an empty string.
-    {
-      return;
-    } else if (this.timerInput.substring(this.timerInput.length - 1) == ':')
-    // if a colon is the last character entered
-    {
-      if (this.timerInput.length == 1)
-      // if the colon is the first character
-      {
-        // populate hours as zero
-        this.timerInput = '00:';
-        return;
-      } else if (this.timerInput.length == 2)
-      // if the colon is the second character
-      {
-        // add a trailing zero
-        this.timerInput = '0' + this.timerInput + ':';
-        return;
-      } else if (this.timerInput.length > 3)
-      // if the colon is not the third character
-      {
-        // remove the colon
-        this.timerInput = this.timerInput.substring(0,this.timerInput.length-1)
-        return;
-      } else {
-        return;
-      }
-    } else if (!this.timerInput.substring(this.timerInput.length - 1).match('[0-9]'))
-    // if the last character entered is not a digit (or a colon)
-    {
-      // remove the character
-      this.timerInput = this.timerInput.substring(0,this.timerInput.length-1);
-      return;
-    } else if (this.timerInput.substring(this.timerInput.length - 1).match('[0-9]'))
-    // if the last character entered is a digit
-    {
-      if (this.timerInput.length < 3){
-        return;
-      } else if (this.timerInput.length == 3){
-        this.timerInput = this.timerInput.substring(0,2) + ':' + this.timerInput.substring(2);
-        return
-      } else if (this.timerInput.length <= 5){
-        return
-      } else {
-        this.timerInput = this.timerInput.substring(0,this.timerInput.length-1)
-        return;
+  validateMinutesInput(){
+    if (!this.inputMinutes){return}
+    var newMinutes:string = '';
+    for (var i = 0, len = this.inputMinutes.length; i < len; i++){
+      if (this.inputMinutes[i].match(this.re)){
+        newMinutes += this.inputMinutes[i];
       }
     }
-
+    this.inputMinutes = newMinutes;
   }
 
   ngOnInit() {

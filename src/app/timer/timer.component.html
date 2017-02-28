@@ -5,13 +5,13 @@
     <input type="tel" pattern="[0-9]*"
             mdInput placeholder="Hours"
             [(ngModel)]="inputHours"
-            (keyup)="validateTimerInput2()">
+            (keyup)="validateHoursInput()">
   </md-input-container>
   <md-input-container mdTooltip="Enter a duration in minutes">
     <input type="tel" pattern="[0-9]*"
             mdInput placeholder="Minutes"
             [(ngModel)]="inputMinutes"
-            (keyup)="validateTimerInput2()">
+            (keyup)="validateMinutesInput()">
   </md-input-container>
   <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
 </md-card>
