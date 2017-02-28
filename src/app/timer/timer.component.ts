@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
-  timerInput:string;
+  timerDuration:number;
   timeRemaining:string;
   alarmTime:string;
   timeEnd: number;
@@ -25,9 +25,12 @@ export class TimerComponent implements OnInit {
     if(this.inputHours){hours = parseInt(this.inputHours);}
     var minutes = 0
     if(this.inputMinutes){minutes = parseInt(this.inputMinutes);}
-    var milliseconds = (hours * 60 + minutes) * 60000;
+    this.timerDuration = (hours * 60 + minutes) * 60000;
     // convert the total amount into milliseconds
-    this.timeEnd = milliseconds + Date.now();
+    this.startTimer();
+  }
+  startTimer(){
+    this.timeEnd = this.timerDuration + Date.now();
     localStorage['brewtimer'] = this.timeEnd.toString();
     // set the end time as a variable and store in the database.
     this.alarmTime = new Date(this.timeEnd).toTimeString();
