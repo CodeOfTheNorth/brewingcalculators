@@ -64,9 +64,9 @@ export class TimerComponent implements OnInit {
     }
   }
   validateTimerInput2(){
-    var re = new RegExp(/[0-9]*/);
+    var re = /[0-9]/;
+    var newHours:string = '';
     for (var i = 0, len = this.inputHours.length; i < len; i++){
-      var newHours:string = '';
       if (this.inputHours[i].match(re)){
         newHours += this.inputHours[i];
       }
