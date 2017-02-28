@@ -11,6 +11,8 @@ export class TimerComponent implements OnInit {
   alarmTime:string;
   timeEnd: number;
   timerInstance: any;
+  inputHours: string;
+  inputMinutes: string;
   constructor() { }
 
   setTimer(){
@@ -60,6 +62,16 @@ export class TimerComponent implements OnInit {
       }
       this.timeRemaining += seconds;
     }
+  }
+  validateTimerInput2(){
+    var re = new RegExp(/[0-9]*/);
+    for (var i = 0, len = this.inputHours.length; i < len; i++){
+      var newHours:string = '';
+      if (this.inputHours[i].match(re)){
+        newHours += this.inputHours[i];
+      }
+    }
+    this.inputHours = newHours;
   }
   validateTimerInput(){
     if (this.timerInput.length >= 5 && !this.timerInput.match(/\d{2}:\d{2}$/)){

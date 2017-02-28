@@ -1,8 +1,17 @@
 <md-card>
   <h1 *ngIf="timeRemaining">{{timeRemaining}}</h1>
   <h2 *ngIf="alarmTime">Timer will go off at {{alarmTime}}</h2>
-  <md-input-container mdTooltip="Enter a duration in hours and minutes">
-    <input type="text" mdInput placeholder="HH:MM" [(ngModel)]="timerInput" (keyup)="validateTimerInput()">
+  <md-input-container mdTooltip="Enter a duration in hours">
+    <input type="tel" pattern="[0-9]*"
+            mdInput placeholder="Hours"
+            [(ngModel)]="inputHours"
+            (keyup)="validateTimerInput2()">
+  </md-input-container>
+  <md-input-container mdTooltip="Enter a duration in minutes">
+    <input type="tel" pattern="[0-9]*"
+            mdInput placeholder="Minutes"
+            [(ngModel)]="inputMinutes"
+            (keyup)="validateTimerInput2()">
   </md-input-container>
   <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
 </md-card>
