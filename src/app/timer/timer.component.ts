@@ -13,6 +13,7 @@ export class TimerComponent implements OnInit {
   timerInstance: any;
   inputHours: string;
   inputMinutes: string;
+  timerRunning: boolean;
   re = /[0-9.]/;
   constructor() { }
 
@@ -27,7 +28,6 @@ export class TimerComponent implements OnInit {
     if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
     this.timerDuration = (hours * 60 + minutes) * 60000;
     // convert the total amount into milliseconds
-    this.startTimer();
   }
   startTimer(){
     this.timeEnd = this.timerDuration + Date.now();
@@ -38,12 +38,19 @@ export class TimerComponent implements OnInit {
     this.timerInstance = setInterval(() =>{this.runTimer()},1000);
     // do the thing
   }
+  stopTimer(){
+    if(this.timerRunning){
+      this.timerRunning = !this.timerRunning;
+      clearInterval(this.timerInstance);
+    }
+  }
   runTimer(){
     if (this.timeEnd){
+      if(!this.timerRunning){this.timerRunning = !this.timerRunning}
       this.timeRemaining = '';
       var remaining = this.timeEnd - Date.now();
       // remaining time is equal to the end time minus the current time
-      if (remaining <=0){clearInterval(this.timerInstance)};
+      if (remaining <=0){clearInterval(this.timerInstance); this.timerRunning = !this.timerRunning;};
       // stop if we're done.
       if (remaining >= 3600000){
         var hours = Math.floor(remaining / 3600000);

@@ -14,4 +14,6 @@
             (keyup)="validateMinutesInput()">
   </md-input-container>
   <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
+  <button *ngIf="!timerInstance && timerDuration" md-mini-fab (click)="startTimer()"><md-icon>timer</md-icon></button>
+  <button *ngIf="timerInstance" md-mini-fab (click)="stopTimer()"><md-icon>timer</md-icon></button>
 </md-card>
