@@ -15,4 +15,13 @@
       <button md-fab (click)="sendKeyword()"><md-icon>add</md-icon></button>
     </md-list-item>
   </md-list>
+  <md-list *ngIf="keywords">
+    <md-list-item *ngFor="let keywordEntry of keywords">
+      <h3 md-line>{{keywordEntry.keyword}}</h3>
+      <p md-line>
+        <span>Description: {{keywordEntry.description}} | </span>
+        <span>Submitter: {{keywordEntry.user_info}}</span>
+      </p>
+    </md-list-item>
+  </md-list>
 </form>
