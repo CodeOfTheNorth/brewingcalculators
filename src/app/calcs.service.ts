@@ -24,4 +24,9 @@ export class CalcsService {
       .map((res:Response) => res.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));
   }
+  getMissing() : Observable<any[]> {
+    return this._http.get(this.api+'suggested_keywords')
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
 }
