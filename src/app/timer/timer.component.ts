@@ -28,6 +28,7 @@ export class TimerComponent implements OnInit {
     if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
     this.timerDuration = (hours * 60 + minutes) * 60000;
     // convert the total amount into milliseconds
+    console.log(this.timerDuration);
   }
   startTimer(){
     this.timeEnd = this.timerDuration + Date.now();
@@ -68,6 +69,9 @@ export class TimerComponent implements OnInit {
         this.timeRemaining += '0';
       }
       this.timeRemaining += seconds;
+    } else {
+      this.timerRunning = false;
+      clearInterval(this.timerInstance);
     }
   }
   validateHoursInput(){
