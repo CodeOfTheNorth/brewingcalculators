@@ -19,39 +19,38 @@ export class GravityComponent implements OnInit {
   changeTool(){
     if(this.currentTool=='Hydrometer'){
       this.currentTool='Refractometer';
-      this.validateEntry();
+      this.validateEntry(); // necessary if we are currently adding or editing a value
     } else {
       this.currentTool='Hydrometer';
-      this.validateEntry();
+      this.validateEntry(); // necessary if we are currently adding or editing a value
     }
   }
   changeUnit(){
     if(this.currentUnit == 'Specific Gravity'){
       this.currentUnit = 'Brix';
-      this.validateEntry();
-      this.updateGravityBrix();
+      this.validateEntry(); // necessary if we are currently adding or editing a value
+      this.updateGravityBrix(); // Updates the display to Brix
     } else {
       this.currentUnit = 'Specific Gravity';
-      this.validateEntry();
-      this.updateGravityBrix();
+      this.validateEntry(); // necessary if we are currently adding or editing a value
     }
   }
   validateEntry(){
-    if(!this.currentEntry){return}
+    if(!this.currentEntry){return} // handles a backspace to an empty input
     var newEntry:string = '';
-    for (var i = 0, len = this.currentEntry.length; i < len; i++){
+    for (var i = 0, len = this.currentEntry.length; i < len; i++){ // check to see if the input is valid by iterating over each character
       if (this.currentEntry[i].match(this.re)){
-        newEntry += this.currentEntry[i];
+        newEntry += this.currentEntry[i]; // append valid characters onto the entry string
       }
     }
-    this.currentEntry = newEntry;
-    if(this.currentUnit=='Specific Gravity'){
+    this.currentEntry = newEntry; // bind the variable to the validated string
+    if(this.currentUnit=='Specific Gravity'){ // warn about numbers out of range for SG
       if(parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
         this.validEntry = true;
       } else {
         this.validEntry = false;
       }
-    } else {
+    } else { // warn about numbers out of range for Brix
       if(parseFloat(this.currentEntry) >= 0 && parseFloat(this.currentEntry) <= 40){
         this.validEntry = true;
       } else {
@@ -62,26 +61,25 @@ export class GravityComponent implements OnInit {
   addEntry(){
     if (this.currentTool == 'Hydrometer'){
       if (this.currentUnit == 'Specific Gravity'){
-        this.addSG();
+        this.addSG(); // we're already in SG, so just add it.
       } else {
-        this.convertSG();
+        this.convertSG(); // we're in Brix, so we need to convert first.
         this.addSG();
       }
     } else { // if you're using a refractometer
-      if (this.gravity.length == 0){ // if it's unfermented
+      if (this.gravity.length == 0){ // if it's unfermented, an ethanol correction is not needed, we handle just like a hydrometer reading
         if(this.currentUnit == 'Specific Gravity'){
           this.addSG();
         } else {
           this.convertSG();
           this.addSG();
         }
-      } else {
+      } else { // if there's an OG value already, it implies fermentation so we correct for ethanol
         if(this.currentUnit == 'Specific Gravity'){
-          this.currentEntry = this.convertBrix(parseFloat(this.currentEntry));
-          var OG = this.gravity[0];
-          var OB = parseFloat(this.convertBrix(OG));
-          this.ethanolCorrect(OB, parseFloat(this.currentEntry));
-          // perform an ethanol correction
+          this.currentEntry = this.convertBrix(parseFloat(this.currentEntry)); // convert to brix first
+          var OG = this.gravity[0]; // fetch OG number (in SG)
+          var OB = parseFloat(this.convertBrix(OG)); // convert it to brix
+          this.ethanolCorrect(OB, parseFloat(this.currentEntry)); // perform an ethanol correction, outputs value in SG
           this.addSG();
         } else {
           var OG = this.gravity[0];
@@ -96,13 +94,13 @@ export class GravityComponent implements OnInit {
   updateEntry(i){
     if (this.currentTool == 'Hydrometer'){
       if (this.currentUnit == 'Specific Gravity'){
-        this.saveEntry(i);
+        this.saveEntry(i); // entry is already in SG
       } else {
-        this.convertSG();
+        this.convertSG(); // entry needs to be converted to SG
         this.saveEntry(i);
       }
     }  else { // if you're using a refractometer
-      if (this.gravity.length == 0){ // if it's unfermented
+      if (this.gravity.length == 0){ // if it's unfermented, handle like hydrometer
         if(this.currentUnit == 'Specific Gravity'){
           this.saveEntry(i);
         } else {
@@ -128,6 +126,8 @@ export class GravityComponent implements OnInit {
     }
   }
   ethanolCorrect(OB, FB){
+    // formula derived from 69th edition CRC handbook of Chemistry and Physics, "Concentrative Properties of Aqueous Solutions: Conversion Tables", Table 88 Sucrose
+    // MathCAD was used to curvefit the data for Degrees Brix @ 20 C (%sucrose by weight) and specific gravity @15 C
     var SG = 1.001843 - 0.002318474*OB - 0.000007775*OB*OB - 0.000000034*OB*OB*OB + 0.00574*FB + 0.00003344*FB*FB + 0.000000086*FB*FB*FB;
     this.currentEntry = (Math.round(SG*1000)/1000).toString();
   }
@@ -137,28 +137,24 @@ export class GravityComponent implements OnInit {
     this.currentEntry = (Math.round(SG*1000)/1000).toString();
   }
   convertBrix(SG:number){
-    // var SG = parseFloat(this.currentEntry);
     var brix = (5172000*(SG - 1))/(17591*SG+2409);
-    var roundBrix = (Math.round(brix*10)/10).toString();
-    return roundBrix;
-  }
-  addBrix(){
-
+    var roundedBrix = (Math.round(brix*10)/10).toString();
+    return roundedBrix; // rounding errors can occur when converting from Brix to SG back to Brix
   }
   addSG(){
-    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
+    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return} // we should only be in SG at this point, so final check to make sure it's a valid number
     this.gravity.push(parseFloat(this.currentEntry));
-    this.validEntry = false;
-    this.currentEntry = '';
+    this.validEntry = false; // reset the entry fields
+    this.currentEntry = ''; // reset the entry fields
     this.updateOutput();
     this.updateGravityBrix();
   }
   editEntry(i){
-    this.editing = i;
+    this.editing = i; // shows and hides appropriate fields in the DOM
   }
   saveEntry(i){
-    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
-    this.gravity[i]=parseFloat(this.currentEntry);
+    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return} // we should only be in SG at this point, so final check to make sure it's a valid number
+    this.gravity[i]=parseFloat(this.currentEntry); // update the proper value
     this.validEntry = false;
     this.currentEntry = '';
     this.editing = -1;
@@ -167,29 +163,28 @@ export class GravityComponent implements OnInit {
   }
   removeEntry(i){
     this.gravity.splice(i, 1);
-    if(this.gravity.length == 0){this.gravity = []}
     this.editing = -1;
     this.updateOutput();
     this.updateGravityBrix();
   }
   updateOutput(){
-    if(this.gravity.length >=2 ){
-      var OG = this.gravity[0]
-      var FG = this.gravity[this.gravity.length-1]
+    if(this.gravity.length >=2 ){ // we're only showing the update when we have two data points
+      var OG = this.gravity[0]; // get our first gravity value (implies OG)
+      var FG = this.gravity[this.gravity.length-1]; // get our last gravity value (implies FG)
       if(OG>FG){
-        this.ABV = Math.round((OG - FG) * 13100) / 100;
-        this.apparentAttenuation = Math.round(((OG - FG)/(OG-1)) * 100000) / 1000;
+        this.ABV = Math.round((OG - FG) * 13100) / 100; // Simple ABV calculation
+        this.apparentAttenuation = Math.round(((OG - FG)/(OG-1)) * 100000) / 1000; // please note this is APPARENT attenuation. Real attenuation to come
       }
-    } else {
+    } else { // we need to purge our result data if we remove enough gravity readings so that we no longer have two data points
       this.ABV = undefined;
       this.apparentAttenuation = undefined;
     }
   }
   updateGravityBrix(){
-    this.gravityBrix = [];
+    this.gravityBrix = []; // reset the Brix array
     if(this.gravity.length > 0 ){
-      for(var i = 0, len = this.gravity.length; i < len; i++){
-        this.gravityBrix.push(parseFloat(this.convertBrix(this.gravity[i])));
+      for(var i = 0, len = this.gravity.length; i < len; i++){ // iterate over the SG array
+        this.gravityBrix.push(parseFloat(this.convertBrix(this.gravity[i]))); // convert to brix and push to brix array.
       }
     }
   }
