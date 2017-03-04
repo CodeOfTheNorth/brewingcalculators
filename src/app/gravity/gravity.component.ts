@@ -16,6 +16,9 @@ export class GravityComponent implements OnInit {
   re = /[0-9.]/;
   ABV:number;
   apparentAttenuation:number;
+  updateStorage(){
+    localStorage['gravity'] = JSON.stringify(this.gravity);
+  }
   changeTool(){
     if(this.currentTool=='Hydrometer'){
       this.currentTool='Refractometer';
@@ -147,6 +150,7 @@ export class GravityComponent implements OnInit {
     this.currentEntry = ''; // reset the entry fields
     this.updateOutput();
     this.updateGravityBrix();
+    this.updateStorage();
   }
   editEntry(i){
     this.editing = i; // shows and hides appropriate fields in the DOM
@@ -159,12 +163,14 @@ export class GravityComponent implements OnInit {
     this.editing = -1;
     this.updateOutput();
     this.updateGravityBrix();
+    this.updateStorage();
   }
   removeEntry(i){
     this.gravity.splice(i, 1);
     this.editing = -1;
     this.updateOutput();
     this.updateGravityBrix();
+    this.updateStorage();
   }
   updateOutput(){
     if(this.gravity.length >=2 ){ // we're only showing the update when we have two data points
@@ -189,6 +195,12 @@ export class GravityComponent implements OnInit {
   }
   constructor(){}
 
-  ngOnInit() {}
+  ngOnInit(
+  ) {
+    if(localStorage['gravity']){
+      this.gravity = JSON.parse(localStorage['gravity']);
+      this.updateOutput();
+    }
+  }
 
 }
