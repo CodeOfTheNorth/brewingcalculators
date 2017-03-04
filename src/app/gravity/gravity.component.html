@@ -1,9 +1,16 @@
 
 <md-card>
+  <p>Specify your preferred unit:</p>
   <md-slide-toggle
     color="primary"
     (click)="changeUnit()">
     {{currentUnit}}
+  </md-slide-toggle>
+  <p>Specify the tool you are using:</p>
+  <md-slide-toggle
+    color="primary"
+    (click)="changeTool()">
+    {{currentTool}}
   </md-slide-toggle>
   <md-list *ngIf="!gravity">
     <md-list-item>
@@ -35,10 +42,11 @@
               (click)="saveEntry(i)">
         <md-icon>add</md-icon>
       </button> <!-- TODO: Gabe - Change to SVG -->
-      <p *ngIf="editing==i && !validEntry && currentEntry"> | Please enter a value between .980 and 1.200</p>
+      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Specific Gravity'"> | Please enter a value between .980 and 1.200</p>
+      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Brix / Plato'">Please enter a value between 0 and 40</p>
     </md-list-item>
-    <md-list-item>
-      <p *ngIf="gravity.length==1">Please enter a Final or Current gravity in {{currentUnit}}.</p>
+    <md-list-item *ngIf="gravity.length==1">
+      <p>Please enter a Final or Current gravity in {{currentUnit}}.</p>
     </md-list-item>
   </md-list>
   <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing == -1">
@@ -53,7 +61,8 @@
           (click)="addEntry()">
     <md-icon>add</md-icon>
   </button> <!-- TODO: Gabe - Change to SVG -->
-  <p *ngIf="editing == -1 && !validEntry && currentEntry">Please enter a value between .980 and 1.200</p>
+  <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Specific Gravity'">Please enter a value between .980 and 1.200</p>
+  <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Brix / Plato'">Please enter a value between 0 and 40</p>
 </md-card>
 <div *ngIf="gravity">
   <md-card *ngIf="gravity.length >=2">

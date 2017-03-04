@@ -8,12 +8,20 @@ import { Component, OnInit } from '@angular/core';
 export class GravityComponent implements OnInit {
   editing:number= -1;
   currentUnit:string = "Specific Gravity";
+  currentTool:string = "Hydrometer";
   currentEntry:string;
   validEntry:boolean = false;
   gravity:Array<number>;
   re = /[0-9.]/;
   ABV:number;
   apparentAttenuation:number;
+  changeTool(){
+    if(this.currentTool=='Hydrometer'){
+      this.currentTool='Refractometer';
+    } else {
+      this.currentTool='Hydrometer';
+    }
+  }
   changeUnit(){
     if(this.currentUnit == 'Specific Gravity'){
       this.currentUnit = 'Brix / Plato';
@@ -30,10 +38,18 @@ export class GravityComponent implements OnInit {
       }
     }
     this.currentEntry = newEntry;
-    if(parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
-      this.validEntry = true;
+    if(this.currentUnit=='Specific Gravity'){
+      if(parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
+        this.validEntry = true;
+      } else {
+        this.validEntry = false;
+      }
     } else {
-      this.validEntry = false;
+      if(parseFloat(this.currentEntry) >= 0 && parseFloat(this.currentEntry) <= 40){
+        this.validEntry = true;
+      } else {
+        this.validEntry = false;
+      }
     }
   }
   addEntry(){
