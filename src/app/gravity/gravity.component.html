@@ -43,7 +43,7 @@
         <md-icon>add</md-icon>
       </button> <!-- TODO: Gabe - Change to SVG -->
       <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Specific Gravity'"> | Please enter a value between .980 and 1.200</p>
-      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Brix / Plato'">Please enter a value between 0 and 40</p>
+      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Brix'">Please enter a value between 0 and 40</p>
     </md-list-item>
     <md-list-item *ngIf="gravity.length==1">
       <p>Please enter a Final or Current gravity in {{currentUnit}}.</p>
@@ -62,7 +62,7 @@
     <md-icon>add</md-icon>
   </button> <!-- TODO: Gabe - Change to SVG -->
   <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Specific Gravity'">Please enter a value between .980 and 1.200</p>
-  <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Brix / Plato'">Please enter a value between 0 and 40</p>
+  <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Brix'">Please enter a value between 0 and 40</p>
 </md-card>
 <div *ngIf="gravity.length != 0">
   <md-card *ngIf="ABV">

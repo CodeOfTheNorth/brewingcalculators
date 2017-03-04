@@ -26,7 +26,7 @@ export class GravityComponent implements OnInit {
   }
   changeUnit(){
     if(this.currentUnit == 'Specific Gravity'){
-      this.currentUnit = 'Brix / Plato';
+      this.currentUnit = 'Brix';
       this.validateEntry();
     } else {
       this.currentUnit = 'Specific Gravity';
