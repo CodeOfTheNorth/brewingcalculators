@@ -12,6 +12,7 @@ export class GravityComponent implements OnInit {
   currentEntry:string;
   validEntry:boolean = false;
   gravity:Array<number>= [];
+  gravityBrix:Array<number>= [];
   re = /[0-9.]/;
   ABV:number;
   apparentAttenuation:number;
@@ -28,9 +29,11 @@ export class GravityComponent implements OnInit {
     if(this.currentUnit == 'Specific Gravity'){
       this.currentUnit = 'Brix';
       this.validateEntry();
+      this.updateGravityBrix();
     } else {
       this.currentUnit = 'Specific Gravity';
       this.validateEntry();
+      this.updateGravityBrix();
     }
   }
   validateEntry(){
@@ -136,7 +139,7 @@ export class GravityComponent implements OnInit {
   convertBrix(SG:number){
     // var SG = parseFloat(this.currentEntry);
     var brix = (5172000*(SG - 1))/(17591*SG+2409);
-    var roundBrix = (Math.round(brix*100)/100).toString();
+    var roundBrix = (Math.round(brix*10)/10).toString();
     return roundBrix;
   }
   addBrix(){
@@ -148,6 +151,7 @@ export class GravityComponent implements OnInit {
     this.validEntry = false;
     this.currentEntry = '';
     this.updateOutput();
+    this.updateGravityBrix();
   }
   editEntry(i){
     this.editing = i;
@@ -159,13 +163,14 @@ export class GravityComponent implements OnInit {
     this.currentEntry = '';
     this.editing = -1;
     this.updateOutput();
+    this.updateGravityBrix();
   }
   removeEntry(i){
     this.gravity.splice(i, 1);
     if(this.gravity.length == 0){this.gravity = []}
-    console.log(this.gravity);
     this.editing = -1;
     this.updateOutput();
+    this.updateGravityBrix();
   }
   updateOutput(){
     if(this.gravity.length >=2 ){
@@ -178,6 +183,14 @@ export class GravityComponent implements OnInit {
     } else {
       this.ABV = undefined;
       this.apparentAttenuation = undefined;
+    }
+  }
+  updateGravityBrix(){
+    this.gravityBrix = [];
+    if(this.gravity.length > 0 ){
+      for(var i = 0, len = this.gravity.length; i < len; i++){
+        this.gravityBrix.push(parseFloat(this.convertBrix(this.gravity[i])));
+      }
     }
   }
   constructor(){}

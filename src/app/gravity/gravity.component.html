@@ -17,7 +17,7 @@
       <p>Please enter an original gravity value in {{currentUnit}}.</p>
     </md-list-item>
   </md-list>
-  <md-list *ngIf="gravity.length!= 0">
+  <md-list *ngIf="gravity.length!= 0 && currentUnit == 'Specific Gravity'">
     <md-list-item *ngFor="let sg of gravity; let i = index">
       <button md-mini-fab
               color=primary
@@ -49,6 +49,42 @@
       <p>Please enter a Final or Current gravity in {{currentUnit}}.</p>
     </md-list-item>
   </md-list>
+
+
+
+  <md-list *ngIf="gravityBrix.length!= 0 && currentUnit == 'Brix'">
+    <md-list-item *ngFor="let sg of gravityBrix; let i = index">
+      <button md-mini-fab
+              color=primary
+              (click)="editEntry(i)">
+        <md-icon>edit</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <button md-mini-fab
+              color=warn
+              (click)="removeEntry(i)">
+        <md-icon>clear</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <p *ngIf="sg != 0"><span *ngIf="i == 0">OG: </span><span *ngIf="i==gravityBrix.length-1&& i != 0">FG: </span>{{sg.toFixed(1)}}</p>
+      <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing==i">
+        <input type="tel" pattern="[0-9.]*"
+                mdInput placeholder="{{currentUnit}}"
+                [(ngModel)]="currentEntry"
+                (keyup)="validateEntry()"
+                (keyup.enter)="updateEntry(i)">
+      </md-input-container>
+      <button md-mini-fab *ngIf="validEntry&&editing==i"
+              color=primary
+              (click)="updateEntry(i)">
+        <md-icon>add</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Specific Gravity'"> | Please enter a value between .980 and 1.200</p>
+      <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Brix'">Please enter a value between 0 and 40</p>
+    </md-list-item>
+    <md-list-item *ngIf="gravityBrix.length==1">
+      <p>Please enter a Final or Current gravity in {{currentUnit}}.</p>
+    </md-list-item>
+  </md-list>
+
   <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing == -1">
     <input type="tel" pattern="[0-9.]*"
             mdInput placeholder="{{currentUnit}}"
