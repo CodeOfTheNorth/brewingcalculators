@@ -18,15 +18,19 @@ export class GravityComponent implements OnInit {
   changeTool(){
     if(this.currentTool=='Hydrometer'){
       this.currentTool='Refractometer';
+      this.validateEntry();
     } else {
       this.currentTool='Hydrometer';
+      this.validateEntry();
     }
   }
   changeUnit(){
     if(this.currentUnit == 'Specific Gravity'){
       this.currentUnit = 'Brix / Plato';
+      this.validateEntry();
     } else {
       this.currentUnit = 'Specific Gravity';
+      this.validateEntry();
     }
   }
   validateEntry(){
@@ -57,7 +61,7 @@ export class GravityComponent implements OnInit {
       if (this.currentUnit == 'Specific Gravity'){
         this.addSG();
       } else {
-        this.addBrix();
+        this.convertSG();
       }
     } else {
 
@@ -65,10 +69,12 @@ export class GravityComponent implements OnInit {
 
   }
   convertSG(){
-
+    var brix = parseFloat(this.currentEntry);
+    var SG = Math.round(((brix / 258.6 - ((brix / 258.2) * 227.1))+1)*1000)/1000;
+    console.log(SG);
   }
   addBrix(){
-    
+
   }
   addSG(){
     if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
