@@ -9,16 +9,39 @@
   </md-slide-toggle>
   <md-list *ngIf="gravity">
     <md-list-item *ngFor="let sg of gravity; let i = index">
-      <p><span *ngIf="i == 0">OG: </span><span *ngIf="i==gravity.length-1&& i != 0">FG: </span>{{sg}}</p>
+      <button md-mini-fab
+              color=primary
+              (click)="editEntry(i)">
+        <md-icon>edit</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <button md-mini-fab
+              color=warn
+              (click)="removeEntry(i)">
+        <md-icon>clear</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <p *ngIf="sg != 0"><span *ngIf="i == 0">OG: </span><span *ngIf="i==gravity.length-1&& i != 0">FG: </span>{{sg}}</p>
+      <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing==i">
+        <input type="tel" pattern="[0-9.]*"
+                mdInput placeholder="{{currentUnit}}"
+                [(ngModel)]="currentEntry"
+                (keyup)="validateEntry()"
+                (keyup.enter)="saveEntry(i)">
+      </md-input-container>
+      <button md-mini-fab *ngIf="validEntry&&editing==i"
+              color=primary
+              (click)="saveEntry(i)">
+        <md-icon>add</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
     </md-list-item>
   </md-list>
-  <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}">
+  <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing == -1">
     <input type="tel" pattern="[0-9.]*"
             mdInput placeholder="{{currentUnit}}"
             [(ngModel)]="currentEntry"
-            (keyup)="validateEntry()">
+            (keyup)="validateEntry()"
+            (keyup.enter)="addEntry()">
   </md-input-container>
-  <button md-mini-fab *ngIf="validEntry"
+  <button md-mini-fab *ngIf="validEntry&&editing == -1"
           color=primary
           (click)="addEntry()">
     <md-icon>add</md-icon>

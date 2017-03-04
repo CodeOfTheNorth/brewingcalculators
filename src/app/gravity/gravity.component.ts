@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gravity.component.css']
 })
 export class GravityComponent implements OnInit {
+  editing:number= -1;
   currentUnit:string = "Specific Gravity";
   currentEntry:string;
   validEntry:boolean = false;
@@ -40,6 +41,19 @@ export class GravityComponent implements OnInit {
     } else {
       this.gravity.push(parseFloat(this.currentEntry));
     }
+    this.currentEntry = '';
+  }
+  editEntry(i){
+    this.editing = i;
+  }
+  saveEntry(i){
+    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
+    this.gravity[i]=parseFloat(this.currentEntry);
+    this.currentEntry = '';
+    this.editing = -1;
+  }
+  removeEntry(i){
+    this.gravity.splice(i, 1);
   }
   constructor() { }
 
