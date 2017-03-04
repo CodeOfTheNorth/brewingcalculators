@@ -60,6 +60,7 @@ export class GravityComponent implements OnInit {
   }
   removeEntry(i){
     this.gravity.splice(i, 1);
+    this.editing = -1;
     this.updateOutput();
   }
   updateOutput(){
@@ -68,7 +69,7 @@ export class GravityComponent implements OnInit {
       var FG = this.gravity[this.gravity.length-1]
       if(OG>FG){
         this.ABV = Math.round((OG - FG) * 13100) / 100;
-        this.apparentAttenuation = Math.round((OG - FG) * 100000) / 100;
+        this.apparentAttenuation = Math.round(((OG - FG)/(OG-1)) * 100000) / 1000;
       }
     }
   }

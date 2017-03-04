@@ -5,6 +5,11 @@
     (click)="changeUnit()">
     {{currentUnit}}
   </md-slide-toggle>
+  <md-list *ngIf="!gravity">
+    <md-list-item>
+      <p>Please enter an original gravity value in {{currentUnit}}.</p>
+    </md-list-item>
+  </md-list>
   <md-list *ngIf="gravity">
     <md-list-item *ngFor="let sg of gravity; let i = index">
       <button md-mini-fab
@@ -30,6 +35,9 @@
               (click)="saveEntry(i)">
         <md-icon>add</md-icon>
       </button> <!-- TODO: Gabe - Change to SVG -->
+    </md-list-item>
+    <md-list-item>
+      <p *ngIf="gravity.length==1">Please enter a Final or Current gravity in {{currentUnit}}.</p>
     </md-list-item>
   </md-list>
   <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}" *ngIf="editing == -1">
