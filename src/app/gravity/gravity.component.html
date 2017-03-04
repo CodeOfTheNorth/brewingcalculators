@@ -12,12 +12,12 @@
     (click)="changeTool()">
     {{currentTool}}
   </md-slide-toggle>
-  <md-list *ngIf="!gravity">
+  <md-list *ngIf="gravity.length == 0">
     <md-list-item>
       <p>Please enter an original gravity value in {{currentUnit}}.</p>
     </md-list-item>
   </md-list>
-  <md-list *ngIf="gravity">
+  <md-list *ngIf="gravity.length!= 0">
     <md-list-item *ngFor="let sg of gravity; let i = index">
       <button md-mini-fab
               color=primary
@@ -64,8 +64,8 @@
   <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Specific Gravity'">Please enter a value between .980 and 1.200</p>
   <p *ngIf="editing == -1 && !validEntry && currentEntry && currentUnit =='Brix / Plato'">Please enter a value between 0 and 40</p>
 </md-card>
-<div *ngIf="gravity">
-  <md-card *ngIf="gravity.length >=2">
+<div *ngIf="gravity.length != 0">
+  <md-card *ngIf="ABV">
     <h3>ABV</h3>
     <p>{{ABV.toFixed(2)}}% ABV</p>
     <h3>Apparent Attenuation</h3>

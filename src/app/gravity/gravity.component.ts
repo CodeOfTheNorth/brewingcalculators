@@ -11,7 +11,7 @@ export class GravityComponent implements OnInit {
   currentTool:string = "Hydrometer";
   currentEntry:string;
   validEntry:boolean = false;
-  gravity:Array<number>;
+  gravity:Array<number>= [];
   re = /[0-9.]/;
   ABV:number;
   apparentAttenuation:number;
@@ -62,27 +62,56 @@ export class GravityComponent implements OnInit {
         this.addSG();
       } else {
         this.convertSG();
+        this.addSG();
       }
-    } else {
-
+    } else { // if you're using a refractometer
+      if (this.gravity.length == 0){ // if it's unfermented
+        if(this.currentUnit == 'Specific Gravity'){
+          this.addSG();
+        } else {
+          this.convertSG();
+          this.addSG();
+        }
+      } else {
+        if(this.currentUnit == 'Specific Gravity'){
+          this.currentEntry = this.convertBrix(parseFloat(this.currentEntry));
+          var OG = this.gravity[0];
+          var OB = parseFloat(this.convertBrix(OG));
+          this.ethanolCorrect(OB, parseFloat(this.currentEntry));
+          // perform an ethanol correction
+          this.addSG();
+        } else {
+          var OG = this.gravity[0];
+          var OB = parseFloat(this.convertBrix(OG));
+          this.ethanolCorrect(OB, parseFloat(this.currentEntry));
+          // perform an ethanol correction
+          this.addSG();
+        }
+      }
     }
 
   }
+  ethanolCorrect(OB, FB){
+    var SG = 1.001843 - 0.002318474*OB - 0.000007775*OB*OB - 0.000000034*OB*OB*OB + 0.00574*FB + 0.00003344*FB*FB + 0.000000086*FB*FB*FB;
+    this.currentEntry = (Math.round(SG*1000)/1000).toString();
+  }
   convertSG(){
     var brix = parseFloat(this.currentEntry);
-    var SG = Math.round(((brix / 258.6 - ((brix / 258.2) * 227.1))+1)*1000)/1000;
-    console.log(SG);
+    var SG = brix / (258.6 - brix * .87955)+1;
+    this.currentEntry = (Math.round(SG*1000)/1000).toString();
+  }
+  convertBrix(SG:number){
+    // var SG = parseFloat(this.currentEntry);
+    var brix = (5172000*(SG - 1))/(17591*SG+2409);
+    var roundBrix = (Math.round(brix*100)/100).toString();
+    return roundBrix;
   }
   addBrix(){
 
   }
   addSG(){
     if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
-    if (!this.gravity){
-      this.gravity = [parseFloat(this.currentEntry)];
-    } else {
-      this.gravity.push(parseFloat(this.currentEntry));
-    }
+    this.gravity.push(parseFloat(this.currentEntry));
     this.validEntry = false;
     this.currentEntry = '';
     this.updateOutput();
@@ -100,6 +129,8 @@ export class GravityComponent implements OnInit {
   }
   removeEntry(i){
     this.gravity.splice(i, 1);
+    if(this.gravity.length == 0){this.gravity = []}
+    console.log(this.gravity);
     this.editing = -1;
     this.updateOutput();
   }
@@ -111,11 +142,13 @@ export class GravityComponent implements OnInit {
         this.ABV = Math.round((OG - FG) * 13100) / 100;
         this.apparentAttenuation = Math.round(((OG - FG)/(OG-1)) * 100000) / 1000;
       }
+    } else {
+      this.ABV = undefined;
+      this.apparentAttenuation = undefined;
     }
   }
-  constructor() { }
+  constructor(){}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
