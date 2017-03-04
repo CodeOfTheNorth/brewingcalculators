@@ -53,6 +53,24 @@ export class GravityComponent implements OnInit {
     }
   }
   addEntry(){
+    if (this.currentTool == 'Hydrometer'){
+      if (this.currentUnit == 'Specific Gravity'){
+        this.addSG();
+      } else {
+        this.addBrix();
+      }
+    } else {
+
+    }
+
+  }
+  convertSG(){
+
+  }
+  addBrix(){
+    
+  }
+  addSG(){
     if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return}
     if (!this.gravity){
       this.gravity = [parseFloat(this.currentEntry)];
