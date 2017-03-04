@@ -129,17 +129,16 @@ export class GravityComponent implements OnInit {
     // formula derived from 69th edition CRC handbook of Chemistry and Physics, "Concentrative Properties of Aqueous Solutions: Conversion Tables", Table 88 Sucrose
     // MathCAD was used to curvefit the data for Degrees Brix @ 20 C (%sucrose by weight) and specific gravity @15 C
     var SG = 1.001843 - 0.002318474*OB - 0.000007775*OB*OB - 0.000000034*OB*OB*OB + 0.00574*FB + 0.00003344*FB*FB + 0.000000086*FB*FB*FB;
-    this.currentEntry = (Math.round(SG*1000)/1000).toString();
+    this.currentEntry = SG.toString();
   }
   convertSG(){
     var brix = parseFloat(this.currentEntry);
     var SG = brix / (258.6 - brix * .87955)+1;
-    this.currentEntry = (Math.round(SG*1000)/1000).toString();
+    this.currentEntry = SG.toString();
   }
   convertBrix(SG:number){
-    var brix = (5172000*(SG - 1))/(17591*SG+2409);
-    var roundedBrix = (Math.round(brix*10)/10).toString();
-    return roundedBrix; // rounding errors can occur when converting from Brix to SG back to Brix
+    var brix = ((5172000*(SG - 1))/(17591*SG+2409)).toString();
+    return brix
   }
   addSG(){
     if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return} // we should only be in SG at this point, so final check to make sure it's a valid number
