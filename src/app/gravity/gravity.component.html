@@ -3,13 +3,13 @@
   <p>Specify your preferred unit:</p>
   <md-slide-toggle
     color="primary"
-    (click)="changeUnit()">
+    (change)="changeUnit()">
     {{currentUnit}}
   </md-slide-toggle>
   <p>Specify the tool you are using:</p>
   <md-slide-toggle
     color="primary"
-    (click)="changeTool()">
+    (change)="changeTool()">
     {{currentTool}}
   </md-slide-toggle>
   <md-list *ngIf="gravity.length == 0">
