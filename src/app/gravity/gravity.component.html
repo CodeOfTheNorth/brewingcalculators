@@ -1,0 +1,26 @@
+<md-card>
+  <p>
+    gravity works!
+  </p>
+  <md-slide-toggle
+    color="primary"
+    (click)="changeUnit()">
+    {{currentUnit}}
+  </md-slide-toggle>
+  <md-list *ngIf="gravity">
+    <md-list-item *ngFor="let sg of gravity">
+      <p>{{sg}}</p>
+    </md-list-item>
+  </md-list>
+  <md-input-container mdTooltip="Enter a gravity in {{currentUnit}}">
+    <input type="tel" pattern="[0-9.]*"
+            mdInput placeholder="{{currentUnit}}"
+            [(ngModel)]="currentEntry"
+            (keyup)="validateEntry()">
+  </md-input-container>
+  <button md-mini-fab *ngIf="validEntry"
+          color=primary
+          (click)="addEntry()">
+    <md-icon>add</md-icon>
+  </button> <!-- TODO: Gabe - Change to SVG -->
+</md-card>
