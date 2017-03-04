@@ -89,7 +89,40 @@ export class GravityComponent implements OnInit {
         }
       }
     }
-
+  }
+  updateEntry(i){
+    if (this.currentTool == 'Hydrometer'){
+      if (this.currentUnit == 'Specific Gravity'){
+        this.saveEntry(i);
+      } else {
+        this.convertSG();
+        this.saveEntry(i);
+      }
+    }  else { // if you're using a refractometer
+      if (this.gravity.length == 0){ // if it's unfermented
+        if(this.currentUnit == 'Specific Gravity'){
+          this.saveEntry(i);
+        } else {
+          this.convertSG();
+          this.saveEntry(i);
+        }
+      } else {
+        if(this.currentUnit == 'Specific Gravity'){
+          this.currentEntry = this.convertBrix(parseFloat(this.currentEntry));
+          var OG = this.gravity[0];
+          var OB = parseFloat(this.convertBrix(OG));
+          this.ethanolCorrect(OB, parseFloat(this.currentEntry));
+          // perform an ethanol correction
+          this.saveEntry(i);
+        } else {
+          var OG = this.gravity[0];
+          var OB = parseFloat(this.convertBrix(OG));
+          this.ethanolCorrect(OB, parseFloat(this.currentEntry));
+          // perform an ethanol correction
+          this.saveEntry(i);
+        }
+      }
+    }
   }
   ethanolCorrect(OB, FB){
     var SG = 1.001843 - 0.002318474*OB - 0.000007775*OB*OB - 0.000000034*OB*OB*OB + 0.00574*FB + 0.00003344*FB*FB + 0.000000086*FB*FB*FB;

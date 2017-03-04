@@ -35,11 +35,11 @@
                 mdInput placeholder="{{currentUnit}}"
                 [(ngModel)]="currentEntry"
                 (keyup)="validateEntry()"
-                (keyup.enter)="saveEntry(i)">
+                (keyup.enter)="updateEntry(i)">
       </md-input-container>
       <button md-mini-fab *ngIf="validEntry&&editing==i"
               color=primary
-              (click)="saveEntry(i)">
+              (click)="updateEntry(i)">
         <md-icon>add</md-icon>
       </button> <!-- TODO: Gabe - Change to SVG -->
       <p *ngIf="editing==i && !validEntry && currentEntry && currentUnit =='Specific Gravity'"> | Please enter a value between .980 and 1.200</p>
