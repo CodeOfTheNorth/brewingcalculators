@@ -152,6 +152,7 @@ export class GravityComponent implements OnInit {
     if (parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
       this.gravity.push(parseFloat(this.currentEntry));
     } else {
+      console.log('The corrected value of ' + this.currentEntry + 'is out of range')
       this.snackMessage = 'Refractometer adjustment out of range';
       this.openSnack();
     }

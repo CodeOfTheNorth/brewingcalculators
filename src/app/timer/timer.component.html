@@ -1,7 +1,59 @@
+<md-card *ngIf="help">
+  <p>This timer is comprised of Major steps and Minor steps.
+    Major steps are things like the end of your mash, or the end of your boil.
+    Times in which you'll stop the timer until it's time to move on to the next step.
+  <br>
+    Minor steps are times in which you will keep the timer running but perform an action.
+    That is to say, things like heating to your next mash temperature, or adding a hop during the boil.
+  <br>
+    If you get de-railed at any point (like your burner runs out of propane), you can pause the timer.
+    The timer will count up from the time you paused it, so you can helpfully see how much you missed.
+    When you're ready to resume, press start again. The timer will resume with how much time you have left.
+  <br>
+    You can edit the timer steps at any point.
+  </p>
+  <button md-raised-button (click)="help = !help" color=primary style="margin:auto;display:block;">Got It!</button>
+</md-card>
 <md-card>
-  <h1 *ngIf="timeRemaining">{{timeRemaining}}</h1>
-  <h2 *ngIf="alarmTime">Timer will go off at {{alarmTime}}</h2>
-  <md-input-container mdTooltip="Enter a duration in hours">
+  <md-list>
+    <div>
+    <md-list-item>
+      <md-input-container mdTooltip="Enter a timer name">
+        <input type="text" mdInput placeholder="{{stepName}}" [(ngModel)]="stepName">
+      </md-input-container>
+      <p *ngIf="majorStep">Enter a name for this timer, like "Boil"</p>
+      <p *ngIf='!majorStep'>Enter a name for this timer event, like "Add 1oz Chinook"</p>
+    </md-list-item>
+    <md-list-item>
+      <button md-raised-button *ngIf="!help" (click)="help = !help" color=warn>Help</button>
+      <md-input-container mdTooltip="Enter a duration in hours">
+        <input type="tel" pattern="[0-9]*"
+                mdInput placeholder="Hours"
+                [(ngModel)]="inputHours"
+                (keyup)="validateHoursInput()">
+      </md-input-container>
+      <md-input-container mdTooltip="Enter a duration in minutes">
+        <input type="tel" pattern="[0-9]*"
+                mdInput placeholder="Minutes"
+                [(ngModel)]="inputMinutes"
+                (keyup)="validateMinutesInput()">
+      </md-input-container>
+      <p *ngIf="entryMessage && !inputMinutes && !inputHours">{{entryMessage}}</p>
+      <button *ngIf="inputMinutes || inputHours"
+              md-mini-fab (click)="addTimer()">
+        <md-icon>check</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+    </md-list-item>
+    </div>
+</md-list>
+
+
+
+
+
+  <!-- <h1 *ngIf="timeRemaining">{{timeRemaining}}</h1>
+  <h2 *ngIf="alarmTime">Timer will go off at {{alarmTime}}</h2> -->
+  <!-- <md-input-container mdTooltip="Enter a duration in hours">
     <input type="tel" pattern="[0-9]*"
             mdInput placeholder="Hours"
             [(ngModel)]="inputHours"
@@ -13,7 +65,7 @@
             [(ngModel)]="inputMinutes"
             (keyup)="validateMinutesInput()">
   </md-input-container>
-  <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> <!-- TODO: Gabe - Change to SVG -->
-  <button *ngIf="!timerRunning && timerDuration" md-mini-fab (click)="startTimer()"><md-icon>timer</md-icon></button>
-  <button *ngIf="timerRunning" md-mini-fab (click)="stopTimer()"><md-icon>timer</md-icon></button>
+  <button md-mini-fab (click)="setTimer()"><md-icon>check</md-icon></button> --> <!-- TODO: Gabe - Change to SVG -->
+  <!-- <button *ngIf="!timerRunning && timerDuration" md-mini-fab (click)="startTimer()"><md-icon>timer</md-icon></button>
+  <button *ngIf="timerRunning" md-mini-fab (click)="stopTimer()"><md-icon>timer</md-icon></button> -->
 </md-card>

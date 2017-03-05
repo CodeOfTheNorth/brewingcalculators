@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-timer',
@@ -6,73 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timer.component.css']
 })
 export class TimerComponent implements OnInit {
-  timerDuration:number;
-  timeRemaining:string;
-  alarmTime:string;
-  timeEnd: number;
-  timerInstance: any;
+  snackMessage: string;
+  snackAction: string = 'OK';
+  help: boolean = true;
+  stepName:string = 'Boil';
+  entryMessage:string = 'Enter a major timer duration';
+  majorStep:boolean = true;
+  // timerDuration:number;
+  // timeRemaining:string;
+  // alarmTime:string;
+  // timeEnd: number;
+  // timerInstance: any;
   inputHours: string;
   inputMinutes: string;
-  timerRunning: boolean;
+  // timerRunning: boolean;
   re = /[0-9.]/;
-  constructor() { }
-
-  setTimer(){
-    if (!this.inputHours && !this.inputMinutes) {// handles null input
-      return;
-    }
-    clearInterval(this.timerInstance);
-    var hours = 0
-    if(this.inputHours){hours = parseFloat(this.inputHours);}
-    var minutes = 0
-    if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
-    this.timerDuration = (hours * 60 + minutes) * 60000;
-    // convert the total amount into milliseconds
-    console.log(this.timerDuration);
-  }
-  startTimer(){
-    this.timeEnd = this.timerDuration + Date.now();
-    localStorage['brewtimer'] = this.timeEnd.toString();
-    // set the end time as a variable and store in the database.
-    this.alarmTime = new Date(this.timeEnd).toTimeString();
-    // display the time the alarm will go off.
-    this.timerInstance = setInterval(() =>{this.runTimer()},1000);
-    // do the thing
-  }
-  stopTimer(){
-    if(this.timerRunning){
-      this.timerRunning = !this.timerRunning;
-      clearInterval(this.timerInstance);
-    }
-  }
-  runTimer(){
-    if (this.timeEnd){
-      if(!this.timerRunning){this.timerRunning = !this.timerRunning}
-      this.timeRemaining = '';
-      var remaining = this.timeEnd - Date.now();
-      // remaining time is equal to the end time minus the current time
-      if (remaining <=0){clearInterval(this.timerInstance); this.timerRunning = !this.timerRunning;};
-      // stop if we're done.
-      if (remaining >= 3600000){
-        var hours = Math.floor(remaining / 3600000);
-        remaining = remaining % 3600000;
-        this.timeRemaining = hours + ':';
-      }
-      var minutes = Math.floor(remaining / 60000);
-      if (minutes.toString().length == 1){
-        this.timeRemaining += '0';
-      }
-      this.timeRemaining += minutes + ':';
-      remaining = remaining % 60000;
-      var seconds = Math.floor(remaining / 1000);
-      if (seconds.toString().length == 1){
-        this.timeRemaining += '0';
-      }
-      this.timeRemaining += seconds;
-    } else {
-      this.timerRunning = false;
-      clearInterval(this.timerInstance);
-    }
+  constructor(public snackBar: MdSnackBar) { }
+  openSnack() {
+    let config = new MdSnackBarConfig();
+    config.duration = 6000;
+    this.snackBar.open(this.snackMessage, this.snackAction, config);
   }
   validateHoursInput(){
     if (!this.inputHours){return}
@@ -94,21 +48,106 @@ export class TimerComponent implements OnInit {
     }
     this.inputMinutes = newMinutes;
   }
+  addTimer(){
+    if (!this.inputHours && !this.inputMinutes) {// handles null input
+      return;
+    }
+    if (this.majorStep){
+      this.addMajor();
+    } else {
+      this.addMinor();
+    }
+  }
+  addMajor(){
+    if(!this.stepName){
+      this.stepName = 'timer'+ Math.random().toFixed(8);
+      this.snackMessage = 'No timer name found! Setting name to: ' + this.stepName + ' You can edit this later.';
+      this.openSnack();
+    }
+    alert(this.stepName);
+  }
+  addMinor(){
+    if(!this.stepName){
+      this.stepName = 'step'+ Math.random().toFixed(8);
+      this.snackMessage = 'No step name found! Setting name to: ' + this.stepName + ' You can edit this later.';
+      this.openSnack();
+    }
+  }
+  // setTimer(){
+  //   if (!this.inputHours && !this.inputMinutes) {// handles null input
+  //     return;
+  //   }
+  //   clearInterval(this.timerInstance);
+  //   this.alarmTime = '';
+  //   this.timeRemaining = '00:00';
+  //   var hours = 0
+  //   if(this.inputHours){hours = parseFloat(this.inputHours);}
+  //   var minutes = 0
+  //   if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
+  //   this.timerDuration = (hours * 60 + minutes) * 60000;
+  //   // convert the total amount into milliseconds
+  //   console.log(this.timerDuration);
+  // }
+  // startTimer(){
+  //   this.timeEnd = this.timerDuration + Date.now();
+  //   localStorage['brewtimer'] = this.timeEnd.toString();
+  //   // set the end time as a variable and store in the database.
+  //   this.alarmTime = new Date(this.timeEnd).toTimeString();
+  //   // display the time the alarm will go off.
+  //   this.timerInstance = setInterval(() =>{this.runTimer()},1000);
+  //   // do the thing
+  // }
+  // stopTimer(){
+  //   if(this.timerRunning){
+  //     this.timerRunning = !this.timerRunning;
+  //     clearInterval(this.timerInstance);
+  //   }
+  // }
+  // runTimer(){
+  //   if (this.timeEnd){
+  //     if(!this.timerRunning){this.timerRunning = !this.timerRunning}
+  //     this.timeRemaining = '';
+  //     var remaining = this.timeEnd - Date.now();
+  //     // remaining time is equal to the end time minus the current time
+  //     if (remaining <=0){clearInterval(this.timerInstance); this.timerRunning = !this.timerRunning;};
+  //     // stop if we're done.
+  //     if (remaining >= 3600000){
+  //       var hours = Math.floor(remaining / 3600000);
+  //       remaining = remaining % 3600000;
+  //       this.timeRemaining = hours + ':';
+  //     }
+  //     var minutes = Math.floor(remaining / 60000);
+  //     if (minutes.toString().length == 1){
+  //       this.timeRemaining += '0';
+  //     }
+  //     this.timeRemaining += minutes + ':';
+  //     remaining = remaining % 60000;
+  //     var seconds = Math.floor(remaining / 1000);
+  //     if (seconds.toString().length == 1){
+  //       this.timeRemaining += '0';
+  //     }
+  //     this.timeRemaining += seconds;
+  //   } else {
+  //     this.timerRunning = false;
+  //     clearInterval(this.timerInstance);
+  //   }
+  // }
+
 
   ngOnInit() {
-    if(localStorage['brewtimer']){
-      this.timeEnd = Number(localStorage['brewtimer']);
-      // retrieve timer info from storage.
-      if(Date.now()>=this.timeEnd){
-        localStorage['brewtimer'] = '';
-        return
-      }
-      this.alarmTime = new Date(this.timeEnd).toTimeString();
-      // display the time the alarm will go off.
-      this.timerInstance = setInterval(() =>{this.runTimer()},1000);
-      // do the thing
-    } else {
-      localStorage['brewtimer'] = '';
-    }
+    // if(localStorage['brewtimer']){
+    //   this.timeEnd = Number(localStorage['brewtimer']);
+    //   // retrieve timer info from storage.
+    //   if(Date.now()>=this.timeEnd){
+    //     localStorage['brewtimer'] = '';
+    //     return
+    //   }
+    //   this.alarmTime = new Date(this.timeEnd).toTimeString();
+    //   // display the time the alarm will go off.
+    //   this.timerInstance = setInterval(() =>{this.runTimer()},1000);
+    //   // do the thing
+    // } else {
+    //   localStorage['brewtimer'] = '';
+    // }
   }
 }
