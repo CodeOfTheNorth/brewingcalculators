@@ -99,6 +99,10 @@ export class TimerComponent implements OnInit {
     if(localStorage['brewtimer']){
       this.timeEnd = Number(localStorage['brewtimer']);
       // retrieve timer info from storage.
+      if(Date.now()>=this.timeEnd){
+        localStorage['brewtimer'] = '';
+        return
+      }
       this.alarmTime = new Date(this.timeEnd).toTimeString();
       // display the time the alarm will go off.
       this.timerInstance = setInterval(() =>{this.runTimer()},1000);
