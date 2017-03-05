@@ -22,13 +22,11 @@ export class PostMissingComponent implements OnInit {
     this.body["description"] = this.description;
     this._calcsService.postMissing(this.body)
       .subscribe(res => {
-
       });
   }
   getKeywords(){
     this._calcsService.getMissing().subscribe(keywords => {
       this.keywords = keywords;
-      console.log(this.keywords);
     },
     error => console.log(error));
   }

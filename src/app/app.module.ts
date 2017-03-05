@@ -17,6 +17,7 @@ import { TimerComponent } from './timer/timer.component';
 
 import { routes } from './app.routes';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { GravityComponent } from './gravity/gravity.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     PostMissingComponent,
     HelpComponent,
     TimerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    GravityComponent
   ],
   imports: [
     BrowserModule,
