@@ -100,7 +100,7 @@ export class GravityComponent implements OnInit {
     }
   }
   updateEntry(i){
-    if (this.currentTool == 'Hydrometer'){
+    if (this.currentTool == 'Hydrometer' || i == 0){
       if (this.currentUnit == 'Specific Gravity'){
         this.saveEntry(i); // entry is already in SG
       } else {
@@ -209,7 +209,7 @@ export class GravityComponent implements OnInit {
   constructor(public snackBar: MdSnackBar){}
   openSnack() {
     let config = new MdSnackBarConfig();
-    config.duration = 2000;
+    config.duration = 6000;
     this.snackBar.open(this.snackMessage, this.snackAction, config);
   }
   ngOnInit(
