@@ -144,8 +144,9 @@ export class GravityComponent implements OnInit {
     return brix
   }
   addSG(){
-    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return} // we should only be in SG at this point, so final check to make sure it's a valid number
-    this.gravity.push(parseFloat(this.currentEntry));
+    if (parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
+      this.gravity.push(parseFloat(this.currentEntry));
+    }
     this.validEntry = false; // reset the entry fields
     this.currentEntry = ''; // reset the entry fields
     this.updateOutput();
@@ -156,8 +157,9 @@ export class GravityComponent implements OnInit {
     this.editing = i; // shows and hides appropriate fields in the DOM
   }
   saveEntry(i){
-    if (parseFloat(this.currentEntry) < .98 || parseFloat(this.currentEntry) > 1.2){return} // we should only be in SG at this point, so final check to make sure it's a valid number
-    this.gravity[i]=parseFloat(this.currentEntry); // update the proper value
+    if (parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
+      this.gravity[i]=parseFloat(this.currentEntry); // update the proper value
+    }
     this.validEntry = false;
     this.currentEntry = '';
     this.editing = -1;
