@@ -11,17 +11,28 @@ export class PostMissingComponent implements OnInit {
   keyword:string;
   name:string;
   description:string;
-  constructor(private _calcsService: CalcsService) { }
+  keywords:any[];
+  constructor(private _calcsService: CalcsService) {
+    this.getKeywords();
+  }
   sendKeyword(){
-    console.log(this.keyword);
     this.body = {};
     this.body["keyword"] = this.keyword;
     this.body["user_info"] = this.name;
     this.body["description"] = this.description;
     this._calcsService.postMissing(this.body)
-      .subscribe(res => {
-
+      .subscribe(res => { this.body = res
       });
+    this.keyword = '';
+    this.name = '';
+    this.description = '';
+    setTimeout(() =>this.getKeywords(), 500);
+  }
+  getKeywords(){
+    this._calcsService.getMissing().subscribe(keywords => {
+      this.keywords = keywords;
+    },
+    error => console.log(error));
   }
   ngOnInit() {
   }
