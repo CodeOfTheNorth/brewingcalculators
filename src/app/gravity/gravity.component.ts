@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-gravity',
   templateUrl: './gravity.component.html',
-  styleUrls: ['./gravity.component.css']
+  styleUrls: ['./gravity.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GravityComponent implements OnInit {
+  snackMessage: string = 'Snack Bar opened.';
+  snackAction: string = 'Retry';
+
   editing:number= -1;
   currentUnit:string = "Specific Gravity";
   currentTool:string = "Hydrometer";
@@ -146,6 +151,9 @@ export class GravityComponent implements OnInit {
   addSG(){
     if (parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
       this.gravity.push(parseFloat(this.currentEntry));
+    } else {
+      this.snackMessage = 'Refractometer adjustment out of range';
+      this.openSnack();
     }
     this.validEntry = false; // reset the entry fields
     this.currentEntry = ''; // reset the entry fields
@@ -159,6 +167,9 @@ export class GravityComponent implements OnInit {
   saveEntry(i){
     if (parseFloat(this.currentEntry) >= .98 && parseFloat(this.currentEntry) <= 1.2){
       this.gravity[i]=parseFloat(this.currentEntry); // update the proper value
+    } else {
+      this.snackMessage = 'Refractometer adjustment out of range';
+      this.openSnack();
     }
     this.validEntry = false;
     this.currentEntry = '';
@@ -195,8 +206,12 @@ export class GravityComponent implements OnInit {
       }
     }
   }
-  constructor(){}
-
+  constructor(public snackBar: MdSnackBar){}
+  openSnack() {
+    let config = new MdSnackBarConfig();
+    config.duration = 2000;
+    this.snackBar.open(this.snackMessage, this.snackAction, config);
+  }
   ngOnInit(
   ) {
     if(localStorage['gravity']){
