@@ -16,6 +16,15 @@
 </md-card>
 <md-card>
   <md-list>
+    {{timer}}
+    {{timer.timerValues.majorStep}}
+    <div *ngIf="timer.length >0">
+      {{timer}}
+    <md-list-item *ngFor="let major of timer.timerValues.majorStep">
+      {{major}}
+      <h1>{{major.name}}</h1>
+    </md-list-item>
+    </div>
     <div>
     <md-list-item>
       <md-input-container mdTooltip="Enter a timer name">

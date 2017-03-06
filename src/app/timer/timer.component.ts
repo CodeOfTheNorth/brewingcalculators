@@ -13,6 +13,7 @@ export class TimerComponent implements OnInit {
   stepName:string = 'Boil';
   entryMessage:string = 'Enter a major timer duration';
   majorStep:boolean = true;
+  timer = {};
   // timerDuration:number;
   // timeRemaining:string;
   // alarmTime:string;
@@ -64,7 +65,30 @@ export class TimerComponent implements OnInit {
       this.snackMessage = 'No timer name found! Setting name to: ' + this.stepName + ' You can edit this later.';
       this.openSnack();
     }
-    alert(this.stepName);
+    var time;
+    var name = this.stepName
+    var hours = 0;
+    if(this.inputHours){hours = parseFloat(this.inputHours);}
+    var minutes = 0;
+    if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
+    time = (hours * 60 + minutes) * 60000;
+
+    this.timer = {
+      timerValues: {
+        'majorStep': {
+          'name': this.stepName,
+          'totalTime': time,
+          'minorSteps': {
+
+          }
+        }
+      }
+    }
+    console.log(JSON.stringify(this.timer['timerValues']));
+    localStorage['timer'] = JSON.stringify(this.timer);
+
+    // this.timer['timerValues'][this.stepName]= {'totalTime':time};
+    console.log(this.timer);
   }
   addMinor(){
     if(!this.stepName){
@@ -73,6 +97,28 @@ export class TimerComponent implements OnInit {
       this.openSnack();
     }
   }
+
+
+
+  // timer:
+  // timerValues:
+  // [
+  //   majorStep1Name:
+  //     [
+  //       totalTime: 60,
+  //       isRunning: false
+  //       minorSteps:
+  //         [
+  //           step1Name: time
+  //         ]
+  //     ]
+  // ]
+
+
+
+
+
+
   // setTimer(){
   //   if (!this.inputHours && !this.inputMinutes) {// handles null input
   //     return;

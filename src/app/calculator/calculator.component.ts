@@ -30,6 +30,7 @@ export class CalculatorComponent {
   displayCalcs(){
     this._calcsService.getCalcs().subscribe(calcs => {
       this.calcs = calcs;
+      console.log(JSON.stringify(calcs));
     },
     error => console.log(error));
   }
