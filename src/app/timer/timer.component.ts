@@ -59,6 +59,19 @@ export class TimerComponent implements OnInit {
       this.addMinor();
     }
   }
+  printHHMM(ms:number){
+    var time = ms/60000;
+    var minutes = time % 60;
+    var hours = Math.abs(Math.round(time/60));
+    var min = '';
+    var hr = '';
+    if (minutes.toString().length == 1){ min = '0'+ minutes} else { min = minutes.toString()}
+    if (hours.toString().length == 1){ hr = '0'+ hours} else { hr = hours.toString()}
+    var timeString:string = hr + ':' + min;
+    // var timeString = new Date(ms).toTimeString();
+    return timeString;
+  }
+
   addMajor(){
     if(!this.stepName){
       this.stepName = 'timer'+ Math.random().toFixed(8);
@@ -74,21 +87,15 @@ export class TimerComponent implements OnInit {
     time = (hours * 60 + minutes) * 60000;
 
     this.timer = {
-      timerValues: {
-        'majorStep': {
-          'name': this.stepName,
+      'timerValues': {
+        'majorSteps': [
+          {'name': this.stepName,
           'totalTime': time,
-          'minorSteps': {
-
-          }
-        }
+          'minorSteps': [{}]}
+        ]
       }
     }
-    console.log(JSON.stringify(this.timer['timerValues']));
     localStorage['timer'] = JSON.stringify(this.timer);
-
-    // this.timer['timerValues'][this.stepName]= {'totalTime':time};
-    console.log(this.timer);
   }
   addMinor(){
     if(!this.stepName){
@@ -97,7 +104,6 @@ export class TimerComponent implements OnInit {
       this.openSnack();
     }
   }
-
 
 
   // timer:

@@ -16,13 +16,9 @@
 </md-card>
 <md-card>
   <md-list>
-    {{timer}}
-    {{timer.timerValues.majorStep}}
-    <div *ngIf="timer.length >0">
-      {{timer}}
-    <md-list-item *ngFor="let major of timer.timerValues.majorStep">
-      {{major}}
-      <h1>{{major.name}}</h1>
+    <div *ngIf="timer.timerValues">
+    <md-list-item *ngFor="let major of timer.timerValues.majorSteps">
+      <h2>{{major.name}}  <small>{{printHHMM(major.totalTime)}}</small></h2>
     </md-list-item>
     </div>
     <div>
