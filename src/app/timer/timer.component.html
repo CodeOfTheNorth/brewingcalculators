@@ -17,11 +17,21 @@
 <md-card>
   <md-list>
     <div *ngIf="timer.timerValues">
-    <md-list-item *ngFor="let major of timer.timerValues.majorSteps">
+    <md-list-item *ngFor="let major of timer.timerValues.majorSteps; let i = index">
+      <button md-mini-fab
+              color=primary
+              (click)="editMajor(i)">
+        <md-icon>edit</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
+      <button md-mini-fab
+              color=warn
+              (click)="removeMajor(i)">
+        <md-icon>clear</md-icon>
+      </button> <!-- TODO: Gabe - Change to SVG -->
       <h2>{{major.name}}  <small>{{printHHMM(major.totalTime)}}</small></h2>
     </md-list-item>
     </div>
-    <div>
+    <div *ngIf="!timer.timerValues.majorSteps[0]">
     <md-list-item>
       <md-input-container mdTooltip="Enter a timer name">
         <input type="text" mdInput placeholder="{{stepName}}" [(ngModel)]="stepName">
@@ -50,7 +60,7 @@
       </button> <!-- TODO: Gabe - Change to SVG -->
     </md-list-item>
     </div>
-</md-list>
+  </md-list>
 
 
 

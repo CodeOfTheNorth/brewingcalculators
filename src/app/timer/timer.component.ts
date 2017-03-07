@@ -13,7 +13,11 @@ export class TimerComponent implements OnInit {
   stepName:string = 'Boil';
   entryMessage:string = 'Enter a major timer duration';
   majorStep:boolean = true;
-  timer = {};
+  timer = {
+    'timerValues': {
+      'majorSteps': []
+    }
+  };
   // timerDuration:number;
   // timeRemaining:string;
   // alarmTime:string;
@@ -68,7 +72,6 @@ export class TimerComponent implements OnInit {
     if (minutes.toString().length == 1){ min = '0'+ minutes} else { min = minutes.toString()}
     if (hours.toString().length == 1){ hr = '0'+ hours} else { hr = hours.toString()}
     var timeString:string = hr + ':' + min;
-    // var timeString = new Date(ms).toTimeString();
     return timeString;
   }
 
@@ -86,15 +89,12 @@ export class TimerComponent implements OnInit {
     if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
     time = (hours * 60 + minutes) * 60000;
 
-    this.timer = {
-      'timerValues': {
-        'majorSteps': [
-          {'name': this.stepName,
-          'totalTime': time,
-          'minorSteps': [{}]}
-        ]
-      }
-    }
+    this.timer['timerValues']['majorSteps']
+      .push({
+        'name':this.stepName,
+        'totalTime':time,
+        'minorSteps':[]
+      })
     localStorage['timer'] = JSON.stringify(this.timer);
   }
   addMinor(){
