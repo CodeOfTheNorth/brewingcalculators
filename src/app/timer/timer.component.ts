@@ -14,6 +14,7 @@ export class TimerComponent implements OnInit {
   entryMessage:string = 'Enter a major timer duration';
   majorStep:boolean = true;
   editingMajor:number = -1;
+  addingMajor:boolean = false; //
   timer = {
     'timerValues': {
       'majorSteps': []
@@ -99,6 +100,7 @@ export class TimerComponent implements OnInit {
     localStorage['timer'] = JSON.stringify(this.timer);
     this.inputHours = '';
     this.inputMinutes = '';
+    this.addingMajor = false;
   }
   removeMajor(i){
     this.timer['timerValues']['majorSteps'].splice(i, 1);

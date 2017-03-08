@@ -63,7 +63,10 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!timer.timerValues.majorSteps[0]">
+    <button md-raised-button *ngIf="timer.timerValues.majorSteps[0] && !addingMajor"
+            (click)="addingMajor = !addingMajor"
+            color=primary>Add a Major timer segment</button>
+    <div *ngIf="!timer.timerValues.majorSteps[0] || addingMajor">
     <md-list-item>
       <md-input-container mdTooltip="Enter a timer name">
         <input type="text" mdInput placeholder="{{stepName}}" [(ngModel)]="stepName">
