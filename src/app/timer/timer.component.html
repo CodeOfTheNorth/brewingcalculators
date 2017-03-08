@@ -17,19 +17,51 @@
 <md-card>
   <md-list>
     <div *ngIf="timer.timerValues">
-    <md-list-item *ngFor="let major of timer.timerValues.majorSteps; let i = index">
-      <button md-mini-fab
-              color=primary
-              (click)="editMajor(i)">
-        <md-icon>edit</md-icon>
-      </button> <!-- TODO: Gabe - Change to SVG -->
-      <button md-mini-fab
-              color=warn
-              (click)="removeMajor(i)">
-        <md-icon>clear</md-icon>
-      </button> <!-- TODO: Gabe - Change to SVG -->
-      <h2>{{major.name}}  <small>{{printHHMM(major.totalTime)}}</small></h2>
-    </md-list-item>
+      <div *ngFor="let major of timer.timerValues.majorSteps; let i = index">
+        <md-list-item>
+          <button md-mini-fab
+                  color=primary
+                  (click)="editMajor(i)">
+            <md-icon>edit</md-icon>
+          </button> <!-- TODO: Gabe - Change to SVG -->
+          <button md-mini-fab
+                  color=warn
+                  (click)="removeMajor(i)">
+            <md-icon>clear</md-icon>
+          </button> <!-- TODO: Gabe - Change to SVG -->
+          <h2>{{major.name}}  <small>{{printHHMM(major.totalTime)}}</small></h2>
+        </md-list-item>
+        <div *ngIf="editingMajor==i">
+          <md-list-item>
+            <md-input-container mdTooltip="Enter a timer name">
+              <input type="text" mdInput placeholder="{{major.name}}" [(ngModel)]="major.name">
+            </md-input-container>
+            <p>Enter a name for this timer, like "Boil"</p>
+          </md-list-item>
+          <md-list-item>
+            <button md-raised-button *ngIf="!help" (click)="help = !help" color=warn>Help</button>
+            <md-input-container mdTooltip="Enter a duration in hours">
+              <input type="tel" pattern="[0-9]*"
+                      mdInput placeholder="Hours"
+                      [(ngModel)]="inputHours"
+                      (keyup)="validateHoursInput()"
+                      (keyup.enter)="saveMajor(i)">
+            </md-input-container>
+            <md-input-container mdTooltip="Enter a duration in minutes">
+              <input type="tel" pattern="[0-9]*"
+                      mdInput placeholder="Minutes"
+                      [(ngModel)]="inputMinutes"
+                      (keyup)="validateMinutesInput()"
+                      (keyup.enter)="saveMajor(i)">
+            </md-input-container>
+            <p *ngIf="entryMessage && !inputMinutes && !inputHours">{{entryMessage}}</p>
+            <button *ngIf="inputMinutes || inputHours"
+                    md-mini-fab (click)="saveMajor(i)">
+              <md-icon>check</md-icon>
+            </button> <!-- TODO: Gabe - Change to SVG -->
+          </md-list-item>
+        </div>
+      </div>
     </div>
     <div *ngIf="!timer.timerValues.majorSteps[0]">
     <md-list-item>
@@ -45,13 +77,15 @@
         <input type="tel" pattern="[0-9]*"
                 mdInput placeholder="Hours"
                 [(ngModel)]="inputHours"
-                (keyup)="validateHoursInput()">
+                (keyup)="validateHoursInput()"
+                (keyup.enter)="addTimer()">
       </md-input-container>
       <md-input-container mdTooltip="Enter a duration in minutes">
         <input type="tel" pattern="[0-9]*"
                 mdInput placeholder="Minutes"
                 [(ngModel)]="inputMinutes"
-                (keyup)="validateMinutesInput()">
+                (keyup)="validateMinutesInput()"
+                (keyup.enter)="addTimer()">
       </md-input-container>
       <p *ngIf="entryMessage && !inputMinutes && !inputHours">{{entryMessage}}</p>
       <button *ngIf="inputMinutes || inputHours"

@@ -13,6 +13,7 @@ export class TimerComponent implements OnInit {
   stepName:string = 'Boil';
   entryMessage:string = 'Enter a major timer duration';
   majorStep:boolean = true;
+  editingMajor:number = -1;
   timer = {
     'timerValues': {
       'majorSteps': []
@@ -96,6 +97,38 @@ export class TimerComponent implements OnInit {
         'minorSteps':[]
       })
     localStorage['timer'] = JSON.stringify(this.timer);
+    this.inputHours = '';
+    this.inputMinutes = '';
+  }
+  removeMajor(i){
+    this.timer['timerValues']['majorSteps'].splice(i, 1);
+  }
+  editMajor(i){
+    this.editingMajor = i;
+  }
+  saveMajor(i){
+    if(!this.timer.timerValues.majorSteps[i].name){
+      this.timer.timerValues.majorSteps[i].name = 'timer'+ Math.random().toFixed(8);
+      this.snackMessage = 'No timer name found! Setting name to: ' + this.timer.timerValues.majorSteps[i].name + ' You can edit this later.';
+      this.openSnack();
+    }
+    var time;
+    var hours = 0;
+    if(this.inputHours){hours = parseFloat(this.inputHours);}
+    var minutes = 0;
+    if(this.inputMinutes){minutes = parseFloat(this.inputMinutes);}
+    time = (hours * 60 + minutes) * 60000;
+
+    this.timer['timerValues']['majorSteps'][i] =
+      {
+        'name':this.timer.timerValues.majorSteps[i].name,
+        'totalTime':time,
+        'minorSteps':[]
+      }
+    localStorage['timer'] = JSON.stringify(this.timer);
+    this.inputHours = '';
+    this.inputMinutes = '';
+    this.editingMajor = -1;
   }
   addMinor(){
     if(!this.stepName){
