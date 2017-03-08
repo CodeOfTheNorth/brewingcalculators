@@ -94,7 +94,7 @@ export class TimerComponent implements OnInit {
       .push({
         'name':this.stepName,
         'totalTime':time,
-        'minorSteps':[]
+        'minorSteps':[] // TODO: We're declaring an empty array. This will erase data later
       })
     localStorage['timer'] = JSON.stringify(this.timer);
     this.inputHours = '';
@@ -107,6 +107,9 @@ export class TimerComponent implements OnInit {
     this.editingMajor = i;
   }
   saveMajor(i){
+    if (!this.inputHours && !this.inputMinutes) {// handles null input
+      return;
+    }
     if(!this.timer.timerValues.majorSteps[i].name){
       this.timer.timerValues.majorSteps[i].name = 'timer'+ Math.random().toFixed(8);
       this.snackMessage = 'No timer name found! Setting name to: ' + this.timer.timerValues.majorSteps[i].name + ' You can edit this later.';
@@ -123,7 +126,7 @@ export class TimerComponent implements OnInit {
       {
         'name':this.timer.timerValues.majorSteps[i].name,
         'totalTime':time,
-        'minorSteps':[]
+        'minorSteps':[] // TODO: We're declaring an empty array. This will erase data later
       }
     localStorage['timer'] = JSON.stringify(this.timer);
     this.inputHours = '';
